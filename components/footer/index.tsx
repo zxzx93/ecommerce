@@ -1,5 +1,7 @@
+import Copyright from './Copyright';
 import Links from './Links';
 import Newsletter from './Newsletter';
+import Payment from './Payment';
 import Socials from './Socials';
 
 import styles from './styles.module.scss';
@@ -11,6 +13,8 @@ function Footer() {
         <Links />
         <Socials />
         <Newsletter />
+        <Payment />
+        <Copyright />
       </div>
     </footer>
   );

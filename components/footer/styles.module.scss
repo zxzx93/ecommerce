@@ -7,11 +7,21 @@
     display: grid;
     gap: 3rem;
     padding: 1rem;
+    grid-template-areas: 'payment' 'links' 'newsletter' 'socials' 'copyright';
+
+    @media (min-width: 800px) {
+      grid-template-areas: 'links socials' 'links newsletter' 'copyright payments';
+    }
+    @media (min-width: 1200px) {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
   }
 
   img {
     width: 140px;
     height: 40px;
+    object-fit: contain;
   }
 
   h4 {
@@ -21,6 +31,7 @@
   }
 
   &__links {
+    grid-area: links;
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(3, 1fr);
@@ -44,6 +55,8 @@
   }
 
   &__socials {
+    grid-area: socials;
+
     section {
       ul {
         margin-top: 10px;
@@ -68,6 +81,8 @@
   }
 
   &__newsletter {
+    grid-area: newsletter;
+
     input {
       flex: 1;
       outline: none;
@@ -91,6 +106,7 @@
   }
 
   &__payment {
+    grid-area: payment;
   }
 
   &__flexwrap {
@@ -105,6 +121,8 @@
   }
 
   &__copyright {
+    grid-area: copyright;
+
     section {
       color: #666;
       padding-bottom: 10px;

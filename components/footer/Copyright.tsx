@@ -1,9 +1,11 @@
 import { IoLocationSharp } from 'react-icons/io5';
 import Link from 'next/link';
 
+import { CountryProps } from '../../Interfaces/Country.interface';
+
 import styles from './styles.module.scss';
 
-function Copyright({ country }) {
+function Copyright({ country }: CountryProps) {
   const data = [
     {
       name: '개인정보 보호 센터',
@@ -38,10 +40,8 @@ function Copyright({ country }) {
             </li>
           ))}
           <li>
-            {/* <a> */}
             <IoLocationSharp />
-            {/* {country.name} */}
-            {/* </a> */}
+            {country.name}
           </li>
         </ul>
       </section>

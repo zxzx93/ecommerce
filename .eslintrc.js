@@ -36,6 +36,13 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
+    '@typescript-eslint/no-var-requires': 0,
     'unused-imports/no-unused-imports-ts': ['error'],
     'import/first': 'error',
     'import/newline-after-import': 'error',

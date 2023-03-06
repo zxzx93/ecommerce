@@ -4,11 +4,13 @@ import { MdSecurity } from 'react-icons/md';
 import { RiAccountPinCircleLine, RiArrowDropDownFill } from 'react-icons/ri';
 import Link from 'next/link';
 
+import type { CountryProps } from '../../Interfaces/Country.interface';
+
 import UserMenu from './UserMenu';
 
 import styles from './styles.module.scss';
 
-function Top() {
+function Top({ country }: CountryProps) {
   const [loggedIn, setLoggedIn] = useState(true);
   const [isVisibled, setIsVisibled] = useState(false);
 
@@ -18,11 +20,8 @@ function Top() {
         <div></div>
         <ul className={styles.top__list}>
           <li className={styles.li}>
-            <img
-              src='https://i.namu.wiki/s/43a07e65f573eb41fffe67ac0d1008fa73b5c7a04a004ff9004ddf0680524c5c5bd8a30c724fd7966bd7d3a2f60d0bd17c3cc159dd41f704f9b6dc188a21346d7fc0f6e8264bb177c273d72b05e7f1179242aff70fdd95d2f3d71e77d60073a7'
-              alt='태극기'
-            />
-            <span>Korea / 원</span>
+            <img src={`${country.flag}`} alt='국기' />
+            <span>{country.name} / 원</span>
           </li>
           <li className={styles.li}>
             <MdSecurity />

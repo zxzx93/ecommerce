@@ -1,0 +1,44 @@
+.input {
+  position: relative;
+  max-width: 380px;
+  width: 300px;
+  background-color: #f0f0f0;
+  margin: 10px 0;
+  height: 55px;
+  border-radius: 55px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  align-items: center;
+  padding: 0 1rem;
+  // margin-bottom: 1rem;
+  svg {
+    width: 25px;
+    height: 25px;
+    stroke: #6666669a;
+    fill: #6666669a;
+  }
+
+  label {
+    display: none;
+  }
+
+  input {
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #333;
+    &::placeholder {
+      color: #aaa;
+      font-weight: 500;
+    }
+  }
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+  margin: 1rem 2rem;
+}

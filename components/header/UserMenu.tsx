@@ -1,26 +1,35 @@
 import Link from 'next/link';
+import type { Session } from 'next-auth';
+import { signIn, signOut } from 'next-auth/react';
 
 import styles from './styles.module.scss';
 
-interface LoggedIn {
-  loggedIn: boolean;
+interface SessionProps {
+  session: Session;
 }
-
-function UserMenu({ loggedIn }: LoggedIn) {
+function UserMenu({ session }: SessionProps) {
   return (
     <div className={styles.menu}>
       <h4>환영합니다.</h4>
-      {loggedIn ? (
+      {session ? (
+        // Todo 타입에러남!
         <div className={styles.flex}>
           <img
             className={styles.menu__img}
-            src='https://cdn-icons-png.flaticon.com/512/4333/4333609.png'
+            src={session.user?.image}
             alt='사용자 이미지'
           />
           <div className={styles.col}>
-            {/* <span>welcome back</span> */}
-            <h3>닉네임</h3>
-            <span>로그아웃</span>
+            <span>welcome back</span>
+            <h3>{session.user?.name}</h3>
+            <span
+              onClick={() => signOut()}
+              onKeyDown={() => signOut()}
+              role='button'
+              tabIndex={0}
+            >
+              로그아웃
+            </span>
           </div>
         </div>
       ) : (
@@ -28,7 +37,11 @@ function UserMenu({ loggedIn }: LoggedIn) {
           <button type='button' className={styles.btn_primary}>
             회원가입
           </button>
-          <button type='button' className={styles.btn_outlined}>
+          <button
+            type='button'
+            className={styles.btn_outlined}
+            onClick={() => signIn()}
+          >
             로그인
           </button>
         </div>

@@ -1,6 +1,5 @@
 import { FaOpencart } from 'react-icons/fa';
 import { RiSearch2Line } from 'react-icons/ri';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
 import styles from './styles.module.scss';

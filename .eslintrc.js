@@ -3,7 +3,7 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
     'prettier',
-    'eslint-plugin-simple-import-sort',
+    'simple-import-sort',
     'unused-imports',
   ],
   parser: '@typescript-eslint/parser',
@@ -36,6 +36,17 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
+    '@typescript-eslint/no-var-requires': 0,
+    'react/require-default-props': 0,
+    'react/button-has-type': 'off',
+    'no-underscore-dangle': 'off',
+    'no-nested-ternary': 'off',
     'unused-imports/no-unused-imports-ts': ['error'],
     'import/first': 'error',
     'import/newline-after-import': 'error',

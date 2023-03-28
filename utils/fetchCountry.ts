@@ -8,6 +8,7 @@ const fetchCountry = async () => {
     return res.data.location.country;
   } catch (err) {
     console.log(err);
+    return err;
   }
 };
 

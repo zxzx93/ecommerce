@@ -3,6 +3,7 @@ import { BsSuitHeart } from 'react-icons/bs';
 import { MdSecurity } from 'react-icons/md';
 import { RiAccountPinCircleLine, RiArrowDropDownFill } from 'react-icons/ri';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 import type { CountryProps } from '../../Interfaces/Country.interface';
 
@@ -11,13 +12,14 @@ import UserMenu from './UserMenu';
 import styles from './styles.module.scss';
 
 function Top({ country }: CountryProps) {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const { data: session } = useSession();
+
   const [isVisibled, setIsVisibled] = useState(false);
 
   return (
     <div className={styles.top}>
       <div className={styles.top__container}>
-        <div></div>
+        <div />
         <ul className={styles.top__list}>
           <li className={styles.li}>
             <img src={`${country.flag}`} alt='국기' />
@@ -45,13 +47,10 @@ function Top({ country }: CountryProps) {
             onMouseLeave={() => setIsVisibled(false)}
             onFocus={() => {}}
           >
-            {loggedIn ? (
+            {session ? (
               <div className={styles.flex}>
-                <img
-                  src='https://cdn-icons-png.flaticon.com/512/4333/4333609.png'
-                  alt='사용자 이미지'
-                />
-                <span>vicky</span>
+                <img src={session?.user?.image} alt='사용자 이미지' />
+                <span>{session?.user?.name}</span>
                 <RiArrowDropDownFill />
               </div>
             ) : (
@@ -62,7 +61,7 @@ function Top({ country }: CountryProps) {
               </div>
             )}
 
-            {isVisibled && <UserMenu loggedIn={loggedIn} />}
+            {isVisibled && <UserMenu session={session} />}
           </li>
         </ul>
       </div>

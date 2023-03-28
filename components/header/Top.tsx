@@ -19,7 +19,7 @@ function Top({ country }: CountryProps) {
   return (
     <div className={styles.top}>
       <div className={styles.top__container}>
-        <div></div>
+        <div />
         <ul className={styles.top__list}>
           <li className={styles.li}>
             <img src={`${country.flag}`} alt='국기' />

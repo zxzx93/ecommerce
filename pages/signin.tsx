@@ -1,10 +1,18 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { BiLeftArrowAlt } from 'react-icons/bi';
 import { yupResolver } from '@hookform/resolvers/yup';
-import type { GetServerSideProps } from 'next';
+import axios from 'axios';
+import type { GetServerSideProps, Redirect } from 'next';
 import Link from 'next/link';
-import { ClientSafeProvider, getProviders, signIn } from 'next-auth/react';
+import Router from 'next/router';
+import {
+  ClientSafeProvider,
+  getCsrfToken,
+  getProviders,
+  getSession,
+  signIn,
+} from 'next-auth/react';
 import { InferType, object, ref, string } from 'yup';
 
 import CircleIconBtn from '../components/button/CircleIconBtn';
@@ -12,6 +20,7 @@ import Footer from '../components/footer';
 import Header from '../components/header';
 import LoginInput from '../components/inputs/loginInput/LoginInput';
 import Layout from '../components/layout/Layout';
+import DotLoaderSpinner from '../components/loader/dotLoader';
 
 import styles from '../styles/signin.module.scss';
 
@@ -28,18 +37,18 @@ const registerSchema = object({
     .max(10, '이름은 2~10자 사이여야 합니다.')
     .matches(/[가-힣]{2,10}$/, '숫자, 영어 및 특수 문자는 허용되지 않습니다.'),
   email: string()
-    .required('로그인할 때나 비밀번호를 재설정해야 할 때 이 정보가 필요합니다.')
+    .required('이메일을 입력하세요.')
     .email('유효한 이메일 주소를 입력하세요.'),
   password: string()
-    .required('영문, 숫자포함 8자리를 입력해주세요.')
+    .required('영문, 숫자포함 8자리를 입력하세요.')
     .min(8, '비밀번호는 8자 이상이어야 합니다.')
     .max(15, '비밀번호는 15자를 초과할 수 없습니다.')
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,15}$/,
-      '영문, 숫자포함 8자리를 입력해주세요.'
+      '영문, 숫자포함 8자리를 입력하세요.'
     ),
   conf_password: string()
-    .required('비밀번호를 확인해주세요.')
+    .required('비밀번호를 확인하세요.')
     .oneOf([ref('password')], '비밀번호는 일치해야 합니다.'),
 });
 
@@ -51,51 +60,85 @@ const country = {
   flag: 'https://cdn-icons-png.flaticon.com/512/197/197551.png?w=360',
 };
 
-const initialValues: LoginData & RegisterData = {
+const initialValues = {
   loginEmail: '',
   loginPassword: '',
   name: '',
   email: '',
   password: '',
   conf_password: '',
+  success: '',
+  error: '',
+  loginError: '',
 };
 
 interface ProviderProps {
   providers: Record<string, ClientSafeProvider> | null;
+  callbackUrl: string;
+  csrfToken: string;
 }
 
-function signin({ providers }: ProviderProps) {
+function signin({ providers, callbackUrl, csrfToken }: ProviderProps) {
   const [user, setUser] = useState(initialValues);
-
-  // const { loginEmail, loginPassword } = user;
+  const [loading, setLoading] = useState(false);
 
   const LoginMethod = useForm<LoginData>({
     resolver: yupResolver(loginSchema),
   });
-  const {
-    // setFocus,
-    handleSubmit,
-  } = LoginMethod;
+  const { handleSubmit } = LoginMethod;
 
   const RegisterMethod = useForm<RegisterData>({
     resolver: yupResolver(registerSchema),
   });
-  const {
-    // setFocus: setFocus2,
-    handleSubmit: handleSubmit2,
-  } = RegisterMethod;
+  const { handleSubmit: handleSubmit2 } = RegisterMethod;
 
-  // useEffect(() => {
-  //   if (Object.keys(errors).length > 0) {
-  //     const firstError: any = Object.keys(errors)[0] as keyof typeof errors;
-  //     setFocus(firstError);
-  //   }
-  // }, [errors, setFocus]);
+  const signInHandler: SubmitHandler<LoginData> = async loginData => {
+    const { loginEmail, loginPassword } = loginData;
+    const options = {
+      email: loginEmail,
+      password: loginPassword,
+      redirect: false,
+    };
+    setLoading(true);
+    const response = await signIn('credentials', options);
+    setUser({ ...user, success: '', error: '' });
+    setLoading(false);
 
-  const signInHandler: SubmitHandler<LoginData> = data =>
-    console.log(data, '데이터');
-  const signUpHandler: SubmitHandler<RegisterData> = data =>
-    console.log(data, '데이터');
+    if (response?.error) {
+      setLoading(false);
+      setUser({ ...user, loginError: response.error });
+    } else {
+      Router.push(callbackUrl || '/');
+    }
+  };
+
+  const signUpHandler: SubmitHandler<RegisterData> = async registerData => {
+    const { name, email, password } = registerData;
+    try {
+      setLoading(true);
+      const response = await axios.post('/api/auth/signup', {
+        name,
+        email,
+        password,
+      });
+      setUser({ ...user, success: response.data.message });
+      setLoading(false);
+
+      setTimeout(async () => {
+        const options = {
+          email,
+          password,
+          redirect: false,
+        };
+        setLoading(true);
+        await signIn('credentials', options);
+        Router.push('/');
+      }, 2000);
+    } catch (error) {
+      setLoading(false);
+      setUser({ ...user, error: error.response.data.message, success: '' });
+    }
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -104,6 +147,7 @@ function signin({ providers }: ProviderProps) {
 
   return (
     <Layout>
+      {loading && <DotLoaderSpinner loading={loading} />}
       <Header country={country} />
       <div className={styles.login}>
         <div className={styles.login__container}>
@@ -119,7 +163,16 @@ function signin({ providers }: ProviderProps) {
           <div className={styles.login__form}>
             <h3>로그인</h3>
             <FormProvider {...LoginMethod}>
-              <form onSubmit={handleSubmit(signInHandler)}>
+              <form
+                onSubmit={handleSubmit(signInHandler)}
+                method='post'
+                action='/api/auth/signin/email'
+              >
+                <input
+                  type='hidden'
+                  name='csrfToken'
+                  defaultValue={csrfToken}
+                />
                 <LoginInput
                   type='text'
                   name='loginEmail'
@@ -135,6 +188,10 @@ function signin({ providers }: ProviderProps) {
                   onChange={handleChange}
                 />
                 <CircleIconBtn buttonType='submit' text='로그인' />
+
+                {user.loginError && (
+                  <span className={styles.error}>{user.loginError}</span>
+                )}
                 <div className={styles.forgotPwd}>비밀번호를 잊으셨나요?</div>
               </form>
             </FormProvider>
@@ -143,20 +200,23 @@ function signin({ providers }: ProviderProps) {
               <span className={styles.or}>간편 로그인</span>
               <div className={styles.login__socials_wrap}>
                 {providers &&
-                  Object.values(providers).map(provider => (
-                    <div key={provider.name}>
-                      <button
-                        className={styles.social_btn}
-                        onClick={() => signIn(provider.id)}
-                      >
-                        <img
-                          alt='간편 로그인 아이콘'
-                          src={`../../icons/${provider.name}.png`}
-                        />
-                        {provider.name} 로그인
-                      </button>
-                    </div>
-                  ))}
+                  Object.values(providers).map(provider => {
+                    if (provider.name === 'Credentials') return null;
+                    return (
+                      <div key={provider.name}>
+                        <button
+                          className={styles.social_btn}
+                          onClick={() => signIn(provider.id)}
+                        >
+                          <img
+                            alt='간편 로그인 아이콘'
+                            src={`../../icons/${provider.name}.png`}
+                          />
+                          {provider.name} 로그인
+                        </button>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -199,6 +259,15 @@ function signin({ providers }: ProviderProps) {
                 <CircleIconBtn buttonType='submit' text='회원가입' />
               </form>
             </FormProvider>
+
+            <div>
+              {user.success && (
+                <span className={styles.success}>{user.success}</span>
+              )}
+            </div>
+            <div>
+              {user.error && <span className={styles.error}>{user.error}</span>}
+            </div>
           </div>
         </div>
       </div>
@@ -208,11 +277,26 @@ function signin({ providers }: ProviderProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { req, query } = ctx;
+  const callbackUrl = query.callbackUrl as string;
+
   const providers = await getProviders();
+  const session = await getSession({ req });
+  const csrfToken = await getCsrfToken(ctx); // 로그인, 로그아웃을 하는데 필요한 CSRF 토큰을 반환
+
+  // 세션 있을경우 이전 페이지로 다시 이동
+  if (session) {
+    return {
+      redirect: {
+        destination: callbackUrl,
+        permanent: false,
+      },
+    };
+  }
 
   return {
-    props: { providers },
+    props: { providers, callbackUrl, csrfToken },
   };
 };
 

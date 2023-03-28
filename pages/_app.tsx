@@ -1,6 +1,5 @@
 import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
-import Head from 'next/head';
 import type { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { persistStore } from 'redux-persist';
@@ -19,20 +18,15 @@ function MyApp({
   session: Session;
 }>) {
   return (
-    <>
-      <Head>
-        <title>Shoppay</title>
-        <meta name='description' content='' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-      <SessionProvider session={pageProps.session}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <Component {...pageProps} />
-          </PersistGate>
-        </Provider>
-      </SessionProvider>
-    </>
+    <SessionProvider session={pageProps.session}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          {/* <Layout> */}
+          <Component {...pageProps} />
+          {/* </Layout> */}
+        </PersistGate>
+      </Provider>
+    </SessionProvider>
   );
 }
 

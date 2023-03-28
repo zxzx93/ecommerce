@@ -3,17 +3,20 @@ import { useSession } from 'next-auth/react';
 
 import Footer from '../components/footer';
 import Header from '../components/header';
+import Layout from '../components/layout/Layout';
 import type { CountryProps } from '../Interfaces/Country.interface';
 import fetchCountry from '../utils/fetchCountry';
 
 function Home({ country }: CountryProps) {
   const { data: session } = useSession();
 
+  console.log(session);
+
   return (
-    <div>
+    <Layout>
       <Header country={country} />
       <Footer country={country} />
-    </div>
+    </Layout>
   );
 }
 

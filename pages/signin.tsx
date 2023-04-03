@@ -3,7 +3,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { BiLeftArrowAlt } from 'react-icons/bi';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
-import type { GetServerSideProps, Redirect } from 'next';
+import type { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import Router from 'next/router';
 import {
@@ -85,11 +85,11 @@ function signin({ providers, callbackUrl, csrfToken }: ProviderProps) {
   const LoginMethod = useForm<LoginData>({
     resolver: yupResolver(loginSchema),
   });
-  const { handleSubmit } = LoginMethod;
-
   const RegisterMethod = useForm<RegisterData>({
     resolver: yupResolver(registerSchema),
   });
+
+  const { handleSubmit } = LoginMethod;
   const { handleSubmit: handleSubmit2 } = RegisterMethod;
 
   const signInHandler: SubmitHandler<LoginData> = async loginData => {
@@ -192,7 +192,9 @@ function signin({ providers, callbackUrl, csrfToken }: ProviderProps) {
                 {user.loginError && (
                   <span className={styles.error}>{user.loginError}</span>
                 )}
-                <div className={styles.forgotPwd}>비밀번호를 잊으셨나요?</div>
+                <div className={styles.forgotPwd}>
+                  <Link href='/auth/forgot'>비밀번호를 잊으셨나요?</Link>
+                </div>
               </form>
             </FormProvider>
 
@@ -231,28 +233,28 @@ function signin({ providers, callbackUrl, csrfToken }: ProviderProps) {
                   type='text'
                   name='name'
                   icon='user'
-                  placeholder='이름을 입력해주세요.'
+                  placeholder='이름'
                   onChange={handleChange}
                 />
                 <LoginInput
                   type='text'
                   name='email'
                   icon='email'
-                  placeholder='이메일을 입력해주세요.'
+                  placeholder='이메일'
                   onChange={handleChange}
                 />
                 <LoginInput
                   type='password'
                   name='password'
                   icon='password'
-                  placeholder='비밀번호를 입력해주세요.'
+                  placeholder='비밀번호'
                   onChange={handleChange}
                 />
                 <LoginInput
                   type='password'
                   name='conf_password'
                   icon='password'
-                  placeholder='비밀번호를 다시 입력해주세요.'
+                  placeholder='비밀번호 재입력'
                   onChange={handleChange}
                 />
 

@@ -2,10 +2,11 @@ import bcrypt from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
 
+import activateEmailTemplate from '../../../emails/activateEmailTemplate';
 import User from '../../../models/User';
 import db from '../../../utils/db';
 import sendEmail from '../../../utils/sendEmail';
-import createActivationToken from '../../../utils/tokens';
+import { createActivationToken } from '../../../utils/tokens';
 import { validateEmail } from '../../../utils/validation';
 
 interface RequestBody {
@@ -47,7 +48,7 @@ handler.post<RequestBody>(async (req, res) => {
     const token = createActivationToken({ id: addedUser._id.toString() });
 
     const url = `${process.env.BASE_URL}/activate/${token}`;
-    sendEmail(email, url, '', '계정을 활성화하세요.');
+    sendEmail(email, url, '', '계정을 활성화하세요.', activateEmailTemplate);
     await db.disconnectDb();
     return res.json({
       message: `회원가입이 완료되어 메인페이지로 이동합니다.`,

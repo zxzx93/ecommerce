@@ -1,0 +1,56 @@
+.forgot {
+  min-height: calc(100vh - 540px);
+  display: grid;
+  place-items: center;
+
+  &__header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    .back__svg {
+      width: 50px;
+      height: 50px;
+      border: 1px solid #66666657;
+      border-radius: 50%;
+      place-items: center;
+      display: grid;
+      cursor: pointer;
+
+      &:hover {
+        border-color: $blue-color;
+        svg {
+          fill: $blue-color;
+        }
+      }
+
+      span {
+        font-weight: 600;
+        font-size: 14px;
+
+        a {
+          color: $blue-color;
+          padding-bottom: 5px;
+          border-bottom: 1px solid $blue-color;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .message {
+    margin-top: 10px;
+
+    .error {
+      font-size: 14px;
+      padding: 10px;
+      color: $error-color;
+    }
+
+    .success {
+      font-size: 14px;
+      padding: 10px;
+      color: #000;
+    }
+  }
+}

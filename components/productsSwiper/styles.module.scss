@@ -1,0 +1,42 @@
+.wrapper {
+  margin-top: 1rem;
+
+  .header {
+    height: 50px;
+    background: #fff;
+    font-size: 28px;
+    color: $dark-gray-color;
+    font-weight: 700;
+    padding: 1rem 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .product {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+
+    &__image {
+      height: 350px;
+      img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    &__infos {
+      color: $dark-gray-color;
+      text-align: start;
+
+      h3 {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      span {
+        font-weight: 700;
+      }
+    }
+  }
+}

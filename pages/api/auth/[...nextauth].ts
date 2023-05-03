@@ -5,7 +5,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 
 import User from '../../../models/User';
-import db from '../../../utils/db';
+import db from '../../../utils/helpers/db';
 
 import clientPromise from './lib/mongodb';
 

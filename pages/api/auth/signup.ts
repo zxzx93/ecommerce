@@ -4,10 +4,10 @@ import nc from 'next-connect';
 
 import activateEmailTemplate from '../../../emails/activateEmailTemplate';
 import User from '../../../models/User';
-import db from '../../../utils/db';
-import sendEmail from '../../../utils/sendEmail';
-import { createActivationToken } from '../../../utils/tokens';
-import { validateEmail } from '../../../utils/validation';
+import db from '../../../utils/helpers/db';
+import sendEmail from '../../../utils/helpers/sendEmail';
+import { createActivationToken } from '../../../utils/helpers/tokens';
+import validateEmail from '../../../utils/validation/EmailValidation';
 
 interface RequestBody {
   body: { name: string; email: string; password: string };

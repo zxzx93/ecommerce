@@ -4,8 +4,8 @@ import nc from 'next-connect';
 import resetEmailTemplate from '../../../emails/resetEmailTemplate';
 import User from '../../../models/User';
 import db from '../../../utils/db';
-import sendEmail from '../../../utils/sendEmail';
-import { createResetToken } from '../../../utils/tokens';
+import sendEmail from '../../../utils/helpers/sendEmail';
+import { createResetToken } from '../../../utils/helpers/tokens';
 
 interface RequestBody {
   body: { email: string };

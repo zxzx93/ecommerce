@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import calcaulateDiff from '../../../utils/dateUtil';
+import calcaulateDiff from '../../../utils/formatting/dateFormat';
 
 import styles from './styles.module.scss';
 

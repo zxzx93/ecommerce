@@ -82,9 +82,8 @@ $success-color: #6cc070;
 .offerSwiper,
 .flashDealsSwiper {
   .swiper-slide img {
-    height: 300px !important;
+    height: 300px;
     box-shadow: $shadow-1 !important;
-    border-radius: 10px !important;
     overflow: hidden;
     border-radius: 10px;
   }

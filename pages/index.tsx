@@ -8,6 +8,7 @@ import Category from '../components/home/category';
 import FlashDeals from '../components/home/flashdeals';
 import Main from '../components/home/main';
 import Layout from '../components/layout/Layout';
+import ProductCard from '../components/productCard';
 import ProductsSwiper from '../components/productsSwiper';
 import {
   gamingSwiper,
@@ -17,12 +18,19 @@ import {
   womenShoes,
   womenSwiper,
 } from '../data/offers';
-import { CountryProps } from '../interfaces/Country.interface';
-import fetchCountry from '../utils/fetchCountry';
+import type { Country } from '../interfaces/Country.interface';
+import type { Product } from '../interfaces/Product.interface';
+import fetchCountry from '../utils/fetchApi/fetchCountry';
+import fetchProducts from '../utils/fetchApi/fetchProducts';
 
 import styles from '../styles/home.module.scss';
 
-function Home({ country }: CountryProps) {
+interface HomeProps {
+  country: Country;
+  products: Product[];
+}
+
+function Home({ country, products }: HomeProps) {
   const { data: session } = useSession();
   const isMedium = useMediaQuery({ query: '(max-width:850px)' });
   const isMobile = useMediaQuery({ query: '(max-width:550px)' });
@@ -44,8 +52,13 @@ function Home({ country }: CountryProps) {
             <Category header='악세사리' products={womenAccessories} />
           </div>
           <ProductsSwiper products={womenSwiper} />
-          <ProductsSwiper header='개임' products={gamingSwiper} />
-          <ProductsSwiper header='실내 인테리어' products={homeImprovSwiper} />
+          <div className={styles.products}>
+            {products.map(product => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </div>
+          {/* <ProductsSwiper header='개임' products={gamingSwiper} /> */}
+          {/* <ProductsSwiper header='실내 인테리어' products={homeImprovSwiper} /> */}
         </div>
       </div>
       <Footer country={country} />
@@ -54,6 +67,7 @@ function Home({ country }: CountryProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const products = await fetchProducts();
   const country = await fetchCountry();
 
   return {
@@ -61,6 +75,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       // { country: { name: country.name, flag: country.flag.emojitwo } },
 
       {
+        products,
         country: {
           name: 'korea',
           flag: 'https://cdn.pixabay.com/photo/2016/05/30/15/33/julia-roberts-1424985_1280.png',

@@ -1,6 +1,6 @@
 import mongoose, { InferSchemaType, Model, Schema } from 'mongoose';
 
-const UserSchema = new Schema(
+const userSchema = new Schema(
   {
     name: {
       type: String,
@@ -84,9 +84,9 @@ const UserSchema = new Schema(
     timestamps: true,
   }
 );
-type TUser = InferSchemaType<typeof UserSchema>;
+type TUser = InferSchemaType<typeof userSchema>;
 
 const User: Model<TUser> =
-  mongoose.models.Users || mongoose.model('Users', UserSchema);
+  mongoose.models.User || mongoose.model('User', userSchema);
 
 export default User;

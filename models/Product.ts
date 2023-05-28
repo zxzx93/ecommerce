@@ -4,16 +4,16 @@ const { ObjectId } = Schema.Types;
 
 const reviewSchema = new Schema({
   reviewBy: { type: ObjectId, ref: 'User', required: true },
-  reting: { type: Number, required: true, default: 0 },
+  rating: { type: Number, required: true, default: 0 },
   review: { type: String, required: true },
   fit: { type: String, required: true },
-  style: { color: String, imgage: String },
+  style: { color: String, image: String },
   size: { type: String },
   images: [],
   likes: [],
 });
 
-const ProductSchema = new Schema(
+const productSchema = new Schema(
   {
     name: {
       type: String,
@@ -29,15 +29,15 @@ const ProductSchema = new Schema(
       unique: true,
       required: true,
     },
-    category: {
+    categories: {
       type: ObjectId,
       required: true,
-      ref: 'Category',
+      ref: 'Categories',
     },
-    subCategory: [
+    subCategories: [
       {
         type: ObjectId,
-        ref: 'subCategory',
+        ref: 'SubCategories',
       },
     ],
     details: [{ name: String, vlaue: String }],
@@ -74,14 +74,14 @@ const ProductSchema = new Schema(
         // },
       },
     ],
-    review: [reviewSchema],
+    reviews: [reviewSchema],
   },
   { timestamps: true }
 );
 
-type TProduct = InferSchemaType<typeof ProductSchema>;
+type TProduct = InferSchemaType<typeof productSchema>;
 
-const product: Model<TProduct> =
-  mongoose.models.Product || mongoose.model('Product', ProductSchema);
+const Product: Model<TProduct> =
+  mongoose.models.Product || mongoose.model('Product', productSchema);
 
-export default product;
+export default Product;

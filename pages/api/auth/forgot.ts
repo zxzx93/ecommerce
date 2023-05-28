@@ -3,7 +3,7 @@ import nc from 'next-connect';
 
 import resetEmailTemplate from '../../../emails/resetEmailTemplate';
 import User from '../../../models/User';
-import db from '../../../utils/db';
+import db from '../../../utils/helpers/db';
 import sendEmail from '../../../utils/helpers/sendEmail';
 import { createResetToken } from '../../../utils/helpers/tokens';
 

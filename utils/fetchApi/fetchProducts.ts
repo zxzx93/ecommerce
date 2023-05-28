@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const fetchProducts = async () => {
+export const fetchProducts = async () => {
   try {
     const res = await axios.get(`${process.env.BASE_URL}/api/products`);
     return res.data;
@@ -10,4 +10,14 @@ const fetchProducts = async () => {
   }
 };
 
-export default fetchProducts;
+export const fetchProductDetail = async ({ slug, style, size }: any) => {
+  try {
+    const res = await axios.get(
+      `${process.env.BASE_URL}/api/product/${slug}?style=${style}`
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};

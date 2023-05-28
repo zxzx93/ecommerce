@@ -11,8 +11,6 @@ import Layout from '../components/layout/Layout';
 import ProductCard from '../components/productCard';
 import ProductsSwiper from '../components/productsSwiper';
 import {
-  gamingSwiper,
-  homeImprovSwiper,
   womenAccessories,
   womenDresses,
   womenShoes,
@@ -21,7 +19,7 @@ import {
 import type { Country } from '../interfaces/Country.interface';
 import type { Product } from '../interfaces/Product.interface';
 import fetchCountry from '../utils/fetchApi/fetchCountry';
-import fetchProducts from '../utils/fetchApi/fetchProducts';
+import { fetchProducts } from '../utils/fetchApi/fetchProducts';
 
 import styles from '../styles/home.module.scss';
 
@@ -57,8 +55,6 @@ function Home({ country, products }: HomeProps) {
               <ProductCard key={product._id} product={product} />
             ))}
           </div>
-          {/* <ProductsSwiper header='개임' products={gamingSwiper} /> */}
-          {/* <ProductsSwiper header='실내 인테리어' products={homeImprovSwiper} /> */}
         </div>
       </div>
       <Footer country={country} />

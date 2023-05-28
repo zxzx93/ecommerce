@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
 
 import User from '../../../models/User';
-import db from '../../../utils/db';
+import db from '../../../utils/helpers/db';
 
 interface RequestBody {
   body: { userId: string; password: string };

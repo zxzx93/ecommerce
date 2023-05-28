@@ -7,7 +7,7 @@ import User from '../../../models/User';
 import db from '../../../utils/helpers/db';
 import sendEmail from '../../../utils/helpers/sendEmail';
 import { createActivationToken } from '../../../utils/helpers/tokens';
-import validateEmail from '../../../utils/validation/EmailValidation';
+import validateEmail from '../../../utils/validation/emailValidation';
 
 interface RequestBody {
   body: { name: string; email: string; password: string };

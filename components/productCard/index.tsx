@@ -15,7 +15,9 @@ interface ProductCardProps {
 function ProductCard({ product }: ProductCardProps) {
   const [active, setActive] = useState(0);
   const [images, setImages] = useState(product.subProducts[active]?.images);
-  const [styless, setStyless] = useState(product.subProducts.map(p => p.color));
+  const [colorList, setColorList] = useState(
+    product.subProducts.map(p => p.color)
+  );
   const [prices, setPrices] = useState(
     product.subProducts[active]?.sizes.map(s => s.price).sort((a, b) => a - b)
   );
@@ -56,12 +58,12 @@ function ProductCard({ product }: ProductCardProps) {
                   )}`}
             </span>
             <div className={styles.product__colors}>
-              {styless &&
-                styless.map((style, i) =>
-                  style.image ? (
+              {colorList &&
+                colorList.map((color, i) =>
+                  color.image ? (
                     <img
                       className={i === active ? styles.active : ''}
-                      src={style.image}
+                      src={color.image}
                       onMouseOver={() => {
                         setImages(product.subProducts[i].images);
                         setActive(i);
@@ -71,7 +73,7 @@ function ProductCard({ product }: ProductCardProps) {
                     />
                   ) : (
                     <span
-                      style={{ backgroundColor: `${style.color}` }}
+                      style={{ backgroundColor: `${color.color}` }}
                       onMouseOver={() => {
                         setImages(product.subProducts[i].images);
                         setActive(i);

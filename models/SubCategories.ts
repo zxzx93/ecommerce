@@ -2,7 +2,7 @@ import mongoose, { InferSchemaType, Model, Schema } from 'mongoose';
 
 const { ObjectId } = Schema.Types;
 
-const SubCategorySchema = new Schema(
+const subCategoriesSchema = new Schema(
   {
     name: {
       type: String,
@@ -19,15 +19,16 @@ const SubCategorySchema = new Schema(
     parent: {
       type: ObjectId,
       required: true,
-      ref: 'Category',
+      ref: 'Categories',
     },
   },
   { timestamps: true }
 );
 
-type TSubCategory = InferSchemaType<typeof SubCategorySchema>;
+type TSubCategories = InferSchemaType<typeof subCategoriesSchema>;
 
-const subCategory: Model<TSubCategory> =
-  mongoose.models.Users || mongoose.model('Users', SubCategorySchema);
+const SubCategories: Model<TSubCategories> =
+  mongoose.models.SubCategories ||
+  mongoose.model('SubCategories', subCategoriesSchema);
 
-export default subCategory;
+export default SubCategories;

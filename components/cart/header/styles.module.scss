@@ -1,0 +1,44 @@
+.header {
+  height: 48px;
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  align-items: center;
+
+  &__container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    img {
+      height: 35px;
+      cursor: pointer;
+    }
+  }
+
+  &__right {
+    a {
+      display: flex;
+      align-items: center;
+      color: #666;
+      font-size: 13px;
+    }
+    svg {
+      fill: #666;
+      width: 13px;
+      height: 13px;
+    }
+    &:hover {
+      cursor: pointer;
+      color: #000;
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+.card {
+  padding: 1rem;
+  background: #fff;
+}
+
+.active {
+  background-image: url('../../public/icons/ok.png');
+  background-size: cover;
+}
+
+// .header {
+//   color: #222;
+//   font-size: 22px;
+// }
+
+.checkbox {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 1.5px solid #ccc;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $redish-color;
+  }
+  &:focus-visible {
+    outline: none !important;
+  }
+}
+
+.notAvailable {
+  color: $red-color;
+  font-size: 13px;
+  font-weight: 600;
+  padding-left: 2rem;
+  z-index: 2;
+}

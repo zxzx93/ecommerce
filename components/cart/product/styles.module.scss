@@ -1,0 +1,138 @@
+@import '../base.scss';
+
+.product {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #666;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__image {
+    display: grid;
+    grid-template-columns: 30px 100px 1fr;
+    gap: 10px;
+
+    img {
+      width: 100px;
+      height: 140px;
+      object-fit: cover;
+    }
+    h1 {
+      font-size: 14px;
+      font-weight: 600;
+      color: $dark-gray-color;
+    }
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 25px 25px;
+      svg {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        fill: #666;
+      }
+    }
+  }
+
+  &__style {
+    display: flex;
+    font-size: 14px;
+    align-items: center;
+    gap: 5px;
+    background: #f9f9f9;
+    width: fit-content;
+    border-radius: 10px;
+    cursor: pointer;
+
+    span {
+      font-weight: 600;
+    }
+    &:hover {
+      background-color: #f5f5f5;
+    }
+    img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  &__priceQty {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    @media (min-width: 500px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    &_price {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .price {
+        font-size: 17px;
+        font-weight: 600;
+      }
+      .priceBefore {
+        text-decoration: line-through;
+        font-size: 14px;
+        color: #999;
+      }
+      .discount {
+        padding: 2px;
+        font-weight: 600;
+        font-size: 11px;
+        color: $red-color;
+        padding: 2px;
+        background: #fff1f1;
+      }
+    }
+
+    &_qty {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      button {
+        place-items: center;
+        display: grid;
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+      }
+      svg {
+        transform: scale(0.9);
+      }
+    }
+  }
+
+  &__shipping {
+    gap: 10px;
+    font-size: 12px;
+    color: $dark-gray-color;
+  }
+}

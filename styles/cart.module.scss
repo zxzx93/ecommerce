@@ -1,0 +1,37 @@
+.cart {
+  padding: 1rem 0;
+  background: #f7f7f7;
+  min-height: calc(100vh - 48px);
+
+  &__container {
+    max-width: 1300px;
+    margin: 0 auto;
+    gap: 1rem;
+    padding: 1rem;
+    display: grid;
+    color: $dark-gray-color;
+    grid-template-areas: 'header' 'products' 'checkout' 'method';
+
+    @media (min-width: 900px) {
+      grid-template-areas: 'header checkout' 'products checkout' 'products method' 'products ...';
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+
+  &__products {
+    grid-area: products;
+
+    @media (min-width: 900px) {
+      transform: translateY(-170px);
+    }
+  }
+  &__header {
+    grid-area: header;
+  }
+  &__checkout {
+    grid-area: checkout;
+  }
+  &__method {
+    grid-area: method;
+  }
+}

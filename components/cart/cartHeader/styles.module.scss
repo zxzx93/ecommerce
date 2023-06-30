@@ -1,0 +1,15 @@
+@import '../base';
+
+.cart__header {
+  height: 120px;
+}
+
+.flex {
+  margin-top: 1rem;
+  gap: 10px;
+  cursor: pointer;
+
+  span {
+    font-size: 14px;
+  }
+}

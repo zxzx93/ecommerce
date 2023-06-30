@@ -29,8 +29,6 @@ function AddReview({ product }: AddReviewProps) {
   const [rating, setRating] = useState<number | null>();
   const [imageFile, setImageFile] = useState<ImageFile[]>([]);
 
-  console.log(imageFile);
-
   const fits = ['작아요', '딱 맞아요', '커요'];
 
   return (

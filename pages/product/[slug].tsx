@@ -94,15 +94,15 @@ export const getServerSideProps: GetServerSideProps<
     colors: product?.subProducts.map(p => p.color),
     priceRange: subProduct?.discount
       ? [
-          prices[0] - prices[0] / subProduct.discount,
+          prices[0] - prices[0] * (subProduct.discount / 100),
           prices[prices.length - 1] -
-            prices[prices.length - 1] / subProduct.discount,
+            prices[prices.length - 1] * (subProduct.discount / 100),
         ]
       : [prices[0], prices[prices.length - 1]],
     price:
       subProduct?.discount > 0
         ? subProduct.sizes[size].price -
-          subProduct.sizes[size].price / subProduct.discount
+          subProduct.sizes[size].price * (subProduct.discount / 100)
         : subProduct.sizes[size].price,
     priceBefore: subProduct?.sizes[size].price,
     quantity: subProduct?.sizes[size].qty,

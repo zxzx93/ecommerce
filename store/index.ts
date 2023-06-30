@@ -4,7 +4,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
 
-import cartReducer from './cartSlice';
+import cartSlice from './cartSlice';
 
 const persistConfig = {
   key: 'root',
@@ -15,11 +15,7 @@ const persistConfig = {
 };
 
 const reducer = combineReducers({
-  cart: cartReducer,
-  // wishlist: wishlistReducer,
-
-  // not persisting this reducer
-  // omitedPart: OmitReducer,
+  cart: cartSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -30,4 +26,5 @@ const store = configureStore({
   middleware: [thunk],
 });
 
+export type RootState = ReturnType<typeof reducer>;
 export default store;

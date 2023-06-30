@@ -4,12 +4,17 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 
-import User from '../../../models/User';
+import User, { TUser } from '../../../models/User';
 import db from '../../../utils/helpers/db';
 
 import clientPromise from './lib/mongodb';
 
-const signInUser = async ({ user, password }) => {
+interface SignInParams {
+  user: TUser;
+  password: string;
+}
+
+const signInUser = async ({ user, password }: SignInParams): Promise<any> => {
   if (!user.password) {
     throw new Error('패스워드를 입력해주세요.');
   }
@@ -27,23 +32,28 @@ export default NextAuth({
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
+        email: {
+          label: 'Email',
+          type: 'email',
+          placeholder: 'example@email.com',
+        },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
-        const email = credentials?.email;
-        const password = credentials?.password;
-
-        const user = await User.findOne({ email });
-        if (user) {
-          return signInUser({ user, password });
+      async authorize(credentials) {
+        if (!credentials || !credentials.email || !credentials.password) {
+          throw new Error('이메일과 비밀번호를 모두 입력하세요.');
         }
-        throw new Error('이메일이 존재하지 않습니다.');
+        const { email, password } = credentials;
+        const user = await User.findOne({ email });
+        if (!user) {
+          throw new Error('해당 이메일을 가진 사용자가 존재하지 않습니다.');
+        }
+        return signInUser({ user, password });
       },
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
+      clientId: process.env.GOOGLE_ID || '',
+      clientSecret: process.env.GOOGLE_SECRET || '',
     }),
   ],
 
@@ -53,10 +63,15 @@ export default NextAuth({
   callbacks: {
     async session({ session, token }) {
       const user = await User.findById(token.sub);
-      session.user.id = user._id || token.sub?.toString();
-      session.user.role = user.role || 'user';
-
-      return session;
+      const updatedSession = {
+        ...session,
+        user: {
+          ...session.user,
+          id: user?._id || token.sub?.toString(),
+          role: user?.role || 'user',
+        },
+      };
+      return updatedSession;
     },
   },
   secret: process.env.JWT_SECRET,

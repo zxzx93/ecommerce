@@ -85,7 +85,7 @@
     }
   }
   .active_size {
-    border: 2px solid #ff4747;
+    border: 2px solid $red-color;
   }
 
   &__colors {
@@ -114,7 +114,7 @@
     }
   }
   .active_color {
-    outline: 2px solid #ff4747;
+    outline: 2px solid $red-color;
     outline-offset: 3px;
   }
 

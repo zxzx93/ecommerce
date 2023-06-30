@@ -32,6 +32,7 @@ function Home({ country, products }: HomeProps) {
   const { data: session } = useSession();
   const isMedium = useMediaQuery({ query: '(max-width:850px)' });
   const isMobile = useMediaQuery({ query: '(max-width:550px)' });
+  console.log(session);
 
   return (
     <Layout>

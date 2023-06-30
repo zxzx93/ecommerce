@@ -1,11 +1,16 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { BsHandbagFill, BsHeart } from 'react-icons/bs';
 import { TbMinus, TbPlus } from 'react-icons/tb';
+import { useDispatch, useSelector } from 'react-redux';
 import Rating from '@mui/material/Rating';
+import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import { CartItem } from '../../../interfaces/Cart.interface';
 import { NewProduct } from '../../../interfaces/Product.interface';
+import { RootState } from '../../../store';
+import { addToCart, updateCart } from '../../../store/cartSlice';
 import numberWithCommas from '../../../utils/formatting/numberFormat';
 
 import Accordian from './Accordian';
@@ -19,7 +24,10 @@ interface InfosProps {
 }
 
 function Infos({ product, setActiveImg }: InfosProps) {
+  const dispatch = useDispatch();
   const router = useRouter();
+  const { cartItems } = useSelector((state: RootState) => state.cart);
+
   const { size, style } = router.query as {
     size?: string;
     style: string;
@@ -27,7 +35,7 @@ function Infos({ product, setActiveImg }: InfosProps) {
 
   const [selectSize, setSelectSize] = useState(size); // 쿼리스트링으로 넘어오는 size가 없을때
   const [qty, setQty] = useState(1); // 수량
-  console.log(product, 'product');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     setSelectSize('');
@@ -39,6 +47,45 @@ function Infos({ product, setActiveImg }: InfosProps) {
       setQty(product.quantity);
     }
   }, [size]);
+
+  const addToCartHandler = async () => {
+    if (!size) {
+      setError('사이즈를 선택해주세요');
+      return;
+    }
+    const {
+      data: { data },
+    }: {
+      data: { data: CartItem };
+    } = await axios.get(
+      `/api/product/${product._id}?style=${product.style}&size=${size}`
+    );
+
+    if (qty > data.quantity) {
+      setError('선택한 수량은 재고보다 많습니다. 수량을 줄여주세요.');
+      return;
+    }
+    if (data.quantity < 1) {
+      setError('이 상품은 품절되었습니다.');
+      return;
+    }
+
+    const uid = `${data._id}_${product.style}_${size}`;
+    const exist = cartItems.find(p => p.uid === uid);
+    // 이미 같은 uid를 가진 상품이 들어있을때 수량만 변경
+    if (exist) {
+      const newCartItems = cartItems.map(p => {
+        if (p.uid === exist.uid) {
+          return { ...p, qty };
+        }
+        return p;
+      });
+      dispatch(updateCart(newCartItems));
+    } else {
+      // 같은 uid 없을때 카트에 담음
+      dispatch(addToCart({ ...data, qty, uid, size: data.size }));
+    }
+  };
 
   return (
     <div className={styles.infos}>
@@ -149,6 +196,7 @@ function Infos({ product, setActiveImg }: InfosProps) {
               cursor: `${product.quantity < 1 ? 'not-allowed' : 'pointer'}`,
             }}
             disabled={product.quantity < 1}
+            onClick={() => addToCartHandler()}
           >
             <BsHandbagFill />
             <b>카트에 넣기</b>

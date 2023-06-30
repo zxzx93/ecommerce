@@ -12,9 +12,8 @@ interface ReviewProps {
 
 function Review({ review }: ReviewProps) {
   const { name, image } = review.reviewBy;
-  console.log(review, '리뷰');
 
-  const formattedDate = dayjs(review?.updatedAt).format('YYYY MM DD HH:mm');
+  const formattedDate = dayjs(review.updatedAt).format('YYYY.MM.DD HH:mm');
 
   return (
     <div className={styles.review}>
@@ -49,7 +48,7 @@ function Review({ review }: ReviewProps) {
         {/* <div className={styles.review__extra}> */}
         <p>도움이 되었나요?</p>
         <div className={styles.review__feedback_like}>
-          {review.likes && review.likes?.like}
+          {/* {review.likes && review.likes?.like} */}
           <span>네</span>
           <span>아니요</span>
         </div>

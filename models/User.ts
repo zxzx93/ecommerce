@@ -84,7 +84,8 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
-type TUser = InferSchemaType<typeof userSchema>;
+
+export type TUser = InferSchemaType<typeof userSchema>;
 
 const User: Model<TUser> =
   mongoose.models.User || mongoose.model('User', userSchema);

@@ -39,17 +39,15 @@ export interface Fits {
   fit: '작아요' | '딱 맞아요' | '커요';
 }
 export interface ReviewBy {
-  reviewBy: {
-    address: [];
-    defaultPaymentMethod: string;
-    email: string;
-    emailVerified: false;
-    image: string;
-    name: string;
-    password: string;
-    role: string;
-    wishlist: [];
-  };
+  address: [];
+  defaultPaymentMethod: string;
+  email: string;
+  emailVerified: false;
+  image: string;
+  name: string;
+  password: string;
+  role: string;
+  wishlist: [];
 }
 
 export interface Reviews {
@@ -75,7 +73,7 @@ export interface Product {
   subCategories: any;
   details: Details[];
   questions: Questions[];
-  shipping: string;
+  shipping: number;
   subProducts: SubProducts[];
   numReviews: number;
   rating: number;
@@ -107,7 +105,7 @@ export interface NewProduct {
   }[];
   refundPolicy: '30일';
   reviews: Reviews[];
-  shipping: string;
+  shipping: number;
   sku: string;
   sizes: Size[];
   subCategories: [];

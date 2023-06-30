@@ -9,8 +9,8 @@ const reviewSchema = new Schema({
   fit: { type: String, required: true },
   style: { color: String, image: String },
   size: { type: String },
-  images: [],
-  likes: [],
+  images: [String],
+  likes: [ObjectId],
 });
 
 const productSchema = new Schema(
@@ -40,7 +40,7 @@ const productSchema = new Schema(
         ref: 'SubCategories',
       },
     ],
-    details: [{ name: String, vlaue: String }],
+    details: [{ name: String, value: String }],
     questions: [{ question: String, answer: String }],
     refundpolicy: { type: String, default: '30일' },
     rating: { type: Number, required: true, default: 0 },
@@ -49,8 +49,8 @@ const productSchema = new Schema(
     subProducts: [
       {
         sku: String,
-        images: [],
-        description_images: [],
+        images: [String],
+        description_images: [String],
         color: {
           color: { type: String },
           image: {

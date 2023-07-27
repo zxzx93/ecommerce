@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CartItem } from '../../../interfaces/Cart.interface';
 import { RootState } from '../../../store';
 import { updateCart } from '../../../store/cartSlice';
-import numberWithCommas from '../../../utils/formatting/numberFormat';
+import { numberWithCommas } from '../../../utils/formatting/numberFormat';
 import handleKeyDown from '../../../utils/helpers/keyboardHandlers';
 
 import styles from './styles.module.scss';

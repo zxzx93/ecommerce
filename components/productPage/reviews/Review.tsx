@@ -22,12 +22,12 @@ function Review({ review }: ReviewProps) {
           <h4>
             {name.slice(0, 1)}***{name.slice(name.length - 1, name.length)}
           </h4>
-          <img src={image} alt='' />
+          <img src={image} alt='사용자 이미지' />
         </div>
         <div className={styles.review__user_orderInfo}>
           <Rating
             name='half-rating-read'
-            defaultValue={review.rating}
+            value={review.rating}
             style={{ color: '#ff4747' }}
             readOnly
           />

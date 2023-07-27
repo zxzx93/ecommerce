@@ -6,6 +6,9 @@ const cartSchema = new Schema(
   {
     products: [
       {
+        _id: {
+          type: ObjectId,
+        },
         product: {
           type: ObjectId,
           ref: 'Products',
@@ -41,13 +44,13 @@ const cartSchema = new Schema(
     totalAfterDiscount: Number,
     user: {
       type: ObjectId,
-      ref: 'User',
+      ref: 'Users',
     },
   },
   { timestamps: true }
 );
 
-type TCart = InferSchemaType<typeof cartSchema>;
+export type TCart = InferSchemaType<typeof cartSchema>;
 
 const Cart: Model<TCart> =
   mongoose.models.Cart || mongoose.model('Cart', cartSchema);

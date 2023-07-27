@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Pagination } from '@mui/material';
 
+import usePagination from '../../../hooks/Pagination';
 import { Color, Reviews, Size } from '../../../interfaces/Product.interface';
 
-import usePagination from './Pagination';
 import Review from './Review';
 import TableHeader from './TableHeader';
 
 import styles from './styles.module.scss';
 
 interface TableProps {
-  reviews: Reviews[];
+  reviews: Reviews[] | [];
   allSize: Size[];
   colors: Color[];
 }
@@ -22,7 +22,7 @@ function Table({ reviews, allSize, colors }: TableProps) {
   const count = Math.ceil(reviews.length / PER_PAGE);
   const DATA = usePagination(reviews, PER_PAGE);
 
-  const handleChange = (e, p) => {
+  const handleChange = (e: ChangeEvent<unknown>, p: number) => {
     setPage(p);
     DATA.jump(p);
   };
@@ -45,7 +45,7 @@ function Table({ reviews, allSize, colors }: TableProps) {
 
       <div className={styles.table__data}>
         {DATA.currentData().map((review: Reviews) => (
-          <Review review={review} />
+          <Review key={review._id} review={review} />
         ))}
       </div>
 
@@ -53,7 +53,6 @@ function Table({ reviews, allSize, colors }: TableProps) {
         <Pagination
           count={count}
           page={page}
-          // variant='round'
           shape='rounded'
           onChange={handleChange}
         />

@@ -8,7 +8,7 @@ import TableSelect from './TableSelect';
 import styles from './styles.module.scss';
 
 interface TableHeaderProps {
-  reviews: Reviews[];
+  reviews?: Reviews[];
   allSize: Size[];
   colors: Color[];
 }

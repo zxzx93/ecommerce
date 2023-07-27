@@ -73,17 +73,22 @@ export const getServerSideProps: GetServerSideProps<
   const prices = subProduct?.sizes.map(s => s.price);
 
   function calculatePercentage(num: number) {
-    return (
-      (product.reviews.reduce((a, review) => {
+    let totalCount = 0;
+    let percentage = 0;
+
+    if (product.reviews) {
+      totalCount = product.reviews.reduce((a, review) => {
         return (
           a + (review.rating === num || review.rating === num + 0.5 ? 1 : 0)
         );
-      }, 0) *
-        100) /
-      product.reviews.length
-    );
+      }, 0);
+
+      percentage = (totalCount * 100) / product.reviews.length;
+    }
+    return percentage;
   }
 
+  const reviewsExist = product.reviews !== undefined;
   const newProduct: NewProduct = {
     ...product,
     style,
@@ -106,24 +111,24 @@ export const getServerSideProps: GetServerSideProps<
         : subProduct.sizes[size].price,
     priceBefore: subProduct?.sizes[size].price,
     quantity: subProduct?.sizes[size].qty,
+    reviews: product.reviews?.reverse() ?? [],
     ratings: [
       {
-        percentage: calculatePercentage(5),
+        percentage: reviewsExist ? calculatePercentage(5) : 0,
       },
       {
-        percentage: calculatePercentage(4),
+        percentage: reviewsExist ? calculatePercentage(4) : 0,
       },
       {
-        percentage: calculatePercentage(3),
+        percentage: reviewsExist ? calculatePercentage(3) : 0,
       },
       {
-        percentage: calculatePercentage(2),
+        percentage: reviewsExist ? calculatePercentage(2) : 0,
       },
       {
-        percentage: calculatePercentage(1),
+        percentage: reviewsExist ? calculatePercentage(1) : 0,
       },
     ],
-    reviews: product?.reviews.reverse(),
     allSizes: product?.subProducts
       .map(p => p.sizes)
       .flat()

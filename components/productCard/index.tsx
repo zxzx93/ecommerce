@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import type { Product } from '../../interfaces/Product.interface';
-import numberWithCommas from '../../utils/formatting/numberFormat';
+import { numberWithCommas } from '../../utils/formatting/numberFormat';
 
 import ProductSwiper from './ProductSwiper';
 

@@ -3,7 +3,7 @@ import { signIn, useSession } from 'next-auth/react';
 
 import { CartItem } from '../../../interfaces/Cart.interface';
 import { fetchSaveCart } from '../../../utils/fetchApi/fetchCart';
-import numberWithCommas from '../../../utils/formatting/numberFormat';
+import { numberWithCommas } from '../../../utils/formatting/numberFormat';
 import withRequestPrevention from '../../../utils/helpers/withRequestPrevention';
 
 import styles from './styles.module.scss';
@@ -28,7 +28,7 @@ function Checkout({
 
   const saveCartToDBHandler = async () => {
     if (session) {
-      const res = fetchSaveCart(selectedItems, session.user.id);
+      const res = fetchSaveCart(selectedItems);
       router.push('/checkout');
     } else {
       signIn();

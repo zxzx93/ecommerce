@@ -20,7 +20,8 @@ const orderSchema = new mongoose.Schema(
           type: String,
         },
         image: {
-          type: String,
+          public_url: String,
+          url: String,
         },
         qty: {
           type: Number,
@@ -66,7 +67,7 @@ const orderSchema = new mongoose.Schema(
       status: String,
     },
     total: {
-      typeL: Number,
+      type: Number,
       required: true,
     },
     shppingPrice: {

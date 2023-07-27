@@ -6,7 +6,7 @@ declare module 'next-auth' {
    */
   interface Session {
     user: {
-      id: Schema.Types.ObjectId;
+      id: string;
       role: string;
     } & DefaultSession['user'];
   }

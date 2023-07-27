@@ -1,7 +1,13 @@
 import mongoose, { InferSchemaType, Model, Schema } from 'mongoose';
 
+const { ObjectId } = Schema.Types;
+
 const userSchema = new Schema(
   {
+    _id: {
+      type: ObjectId,
+      required: true,
+    },
     name: {
       type: String,
       required: [true, '이름을 입력해주세요.'],
@@ -22,8 +28,7 @@ const userSchema = new Schema(
     },
     image: {
       type: String,
-      default:
-        'https://res.cloudinary.com/dmhcnhtng/image/upload/v1664642478/992490_b0iqzq.png',
+      default: 'https://img.freepik.com/free-icon/user_318-159711.jpg',
     },
     emailVerified: {
       type: Boolean,
@@ -35,17 +40,17 @@ const userSchema = new Schema(
     },
     address: [
       {
-        firstName: {
+        name: {
           type: String,
-        },
-        lastName: {
-          type: String,
+          required: true,
         },
         phoneNumber: {
           type: String,
+          required: true,
         },
         address1: {
           type: String,
+          required: true,
         },
         address2: {
           type: String,
@@ -55,6 +60,7 @@ const userSchema = new Schema(
         },
         zipCode: {
           type: String,
+          required: true,
         },
         state: {
           type: String,
@@ -71,7 +77,7 @@ const userSchema = new Schema(
     wishlist: [
       {
         product: {
-          type: Schema.Types.ObjectId,
+          type: ObjectId,
           ref: 'Product',
         },
         style: {
@@ -82,6 +88,7 @@ const userSchema = new Schema(
   },
   {
     timestamps: true,
+    toObject: { virtuals: true },
   }
 );
 

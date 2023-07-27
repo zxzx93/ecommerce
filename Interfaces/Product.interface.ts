@@ -78,7 +78,7 @@ export interface Product {
   numReviews: number;
   rating: number;
   refundPolicy: '30일';
-  reviews: Reviews[];
+  reviews?: Reviews[];
 }
 
 export interface NewProduct {

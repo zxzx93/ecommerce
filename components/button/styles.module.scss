@@ -7,7 +7,7 @@
   border-radius: 55px;
   font-weight: 600;
   color: #fff;
-  background: $blue-color;
+  background: $gradient-color-2;
   display: block;
   cursor: pointer;
 
@@ -23,7 +23,7 @@
     right: 5px;
 
     svg {
-      fill: $blue-color;
+      fill: $red-color;
     }
   }
 }

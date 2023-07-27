@@ -18,7 +18,7 @@ function Reviews({ product }: ReviewsProps) {
   return (
     <div className={styles.reviews}>
       <div className={styles.reviews__container}>
-        <h3>고객 이용 후기 ({product.reviews.length}+)</h3>
+        <h3>고객 이용 후기 ({product.reviews?.length}+)</h3>
         <div className={styles.reviews__stats}>
           <div className={styles.reviews__stats_overview}>
             <span>평점</span>
@@ -60,11 +60,11 @@ function Reviews({ product }: ReviewsProps) {
             ))}
           </div>
         </div>
-        {!session ? (
+        {session ? (
           <AddReview product={product} />
         ) : (
           <button className={styles.submit_btn} onClick={() => signIn()}>
-            로그인 후 후기보기
+            로그인 후 리뷰보기
           </button>
         )}
 

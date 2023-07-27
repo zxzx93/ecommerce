@@ -3,18 +3,37 @@ import mongoose, { InferSchemaType, Model, Schema } from 'mongoose';
 const { ObjectId } = Schema.Types;
 
 const reviewSchema = new Schema({
-  reviewBy: { type: ObjectId, ref: 'User', required: true },
-  rating: { type: Number, required: true, default: 0 },
-  review: { type: String, required: true },
-  fit: { type: String, required: true },
-  style: { color: String, image: String },
-  size: { type: String },
-  images: [String],
-  likes: [ObjectId],
+  reviewBy: {
+    type: ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  rating: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  review: {
+    type: String,
+    required: true,
+  },
+  size: {
+    type: String,
+  },
+  style: {
+    color: String,
+    image: String,
+  },
+  fit: {
+    type: String,
+  },
+  images: [],
+  likes: [],
 });
 
 const productSchema = new Schema(
   {
+    reviews: [reviewSchema],
     name: {
       type: String,
       required: [true, '이름을 입력해주세요.'],
@@ -74,7 +93,6 @@ const productSchema = new Schema(
         // },
       },
     ],
-    reviews: [reviewSchema],
   },
   { timestamps: true }
 );

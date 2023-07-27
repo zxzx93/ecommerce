@@ -3,14 +3,10 @@ import axios from 'axios';
 import { CartItem } from '../../interfaces/Cart.interface';
 
 // checkout 결제 버튼 클릭시 카트에 저장
-export const fetchSaveCart = async (
-  selectedItems: CartItem[],
-  userId: CartItem['_id']
-) => {
+export const fetchSaveCart = async (selectedItems: CartItem[]) => {
   try {
     const { data } = await axios.post(`/api/user/saveCart`, {
       selectedItems,
-      userId,
     });
     return data;
   } catch (err) {

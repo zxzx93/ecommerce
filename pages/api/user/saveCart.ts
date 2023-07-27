@@ -5,6 +5,7 @@ import {
   SaveCartRequestData,
   TempProduct,
 } from '../../../interfaces/Cart.interface';
+import auth from '../../../middleware/auth';
 import Cart from '../../../models/Cart';
 import Product from '../../../models/Product';
 import User from '../../../models/User';
@@ -15,9 +16,9 @@ const handler = nc<SaveCartRequestData, NextApiResponse>();
 handler.post(async (req, res) => {
   try {
     db.connectDb();
-    const { selectedItems, userId } = req.body;
+    const { selectedItems } = req.body;
 
-    const user = await User.findById(userId);
+    const user = await User.findById(req.user);
     const existingCart = await Cart.findOne({ user: user?._id });
     if (existingCart) {
       await existingCart.remove();
@@ -68,4 +69,4 @@ handler.post(async (req, res) => {
   }
 });
 
-export default handler;
+export default auth(handler);

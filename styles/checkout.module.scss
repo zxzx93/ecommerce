@@ -1,0 +1,10 @@
+.checkout {
+  max-width: 1300px;
+  margin-top: 2rem;
+
+  @media (min-width: 1000px) {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 2fr 1fr;
+  }
+}

@@ -54,8 +54,8 @@ export interface AddProductResponseData extends NextApiResponse {
 export interface SaveCartRequestData extends NextApiRequest {
   body: {
     selectedItems: CartItem[];
-    userId: string;
   };
+  user: string;
 }
 
 export interface SaveCartResponse {

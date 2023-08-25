@@ -1,4 +1,4 @@
-import { CartItem } from '../../interfaces/Cart.interface';
+import { CartItem } from '../../interfaces/front/Cart.interface';
 
 const compareArrays = (array1: CartItem[], array2: CartItem[]): boolean => {
   if (array1.length !== array2.length) return false;

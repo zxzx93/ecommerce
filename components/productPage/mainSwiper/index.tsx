@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import InnerImageZoom from 'react-inner-image-zoom';
 
-import { ProductImage } from '../../../interfaces/Product.interface';
+import { ProductImage } from '../../../interfaces/front/Product.interface';
 
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
 import styles from './styles.module.scss';

@@ -1,12 +1,14 @@
-import mongoose, { InferSchemaType, Model } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
 
-const categoriesSchema = new mongoose.Schema(
+import { ICategories } from '../interfaces/back/Categories.interface';
+
+const categoriesSchema = new Schema<ICategories>(
   {
     name: {
       type: String,
       required: true,
-      minlength: [2, 'must be atleast 2 charcters'],
-      maxlength: [32, 'must be atleast 2 charcters'],
+      minlength: 2,
+      maxlength: 32,
     },
     slug: {
       type: String,
@@ -20,9 +22,7 @@ const categoriesSchema = new mongoose.Schema(
   }
 );
 
-type TCategories = InferSchemaType<typeof categoriesSchema>;
-
-const Categories: Model<TCategories> =
+const Categories: Model<ICategories> =
   mongoose.models.Categories || mongoose.model('Categories', categoriesSchema);
 
 export default Categories;

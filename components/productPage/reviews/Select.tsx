@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 
-import { Color, Size } from '../../../interfaces/Product.interface';
+import { Color, Size } from '../../../interfaces/front/Product.interface';
 
 import styles from './styles.module.scss';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Rating } from '@mui/material';
 import dayjs from 'dayjs';
 
-import { Reviews } from '../../../interfaces/Product.interface';
+import { Reviews } from '../../../interfaces/front/Product.interface';
 
 import styles from './styles.module.scss';
 

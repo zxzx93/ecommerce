@@ -1,9 +1,10 @@
 import { NextApiResponse } from 'next';
 import nc from 'next-connect';
 
-import { ManageAddressRequestData } from '../../../interfaces/User.interface';
+import { ManageAddressRequestData } from '../../../interfaces/back/User.interface';
+import { Address } from '../../../interfaces/front/User.interface';
 import auth from '../../../middleware/auth';
-import User, { TUser } from '../../../models/User';
+import User from '../../../models/User';
 import db from '../../../utils/helpers/db';
 
 const handler = nc<ManageAddressRequestData, NextApiResponse>();
@@ -21,11 +22,13 @@ handler.put(async (req, res) => {
       return res.status(404).json({ message: '사용자를 찾을 수 없음' });
     }
 
+    const userAddress = user?.address as Address[];
+
     // user의 address 배열을 수정
-    if (user?.address) {
-      user.address = user.address.map(address => {
+    if (userAddress) {
+      user.address = userAddress.map(address => {
         const isActive = address._id.toString() === id;
-        return { ...address.toObject(), active: isActive };
+        return { ...address, active: isActive };
       });
     }
 

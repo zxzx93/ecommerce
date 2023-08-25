@@ -1,6 +1,8 @@
-import mongoose, { InferSchemaType, Model, Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
 
-const couponSchema = new Schema(
+import { ICoupon } from '../interfaces/back/coupon.interface';
+
+const couponSchema = new Schema<ICoupon>(
   {
     coupon: {
       type: String,
@@ -27,9 +29,7 @@ const couponSchema = new Schema(
   { timestamps: true }
 );
 
-export type TCoupon = InferSchemaType<typeof couponSchema>;
-
-const Coupon: Model<TCoupon> =
+const Coupon: Model<ICoupon> =
   mongoose.models.Coupon || mongoose.model('Coupon', couponSchema);
 
 export default Coupon;

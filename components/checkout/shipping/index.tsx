@@ -9,7 +9,7 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType, object, string } from 'yup';
 
-import { TUser } from '../../../models/User';
+import { IUser } from '../../../interfaces/back/User.interface';
 import {
   fetchChangeActiveAddress,
   fetchDeleteAddress,
@@ -22,10 +22,10 @@ import ShippingInput from '../../inputs/shippingInput/ShippingInput';
 import styles from './styles.module.scss';
 
 interface AddressProps {
-  user: TUser;
+  user: IUser;
   addressesProps: {
-    addresses: TUser['address'];
-    setAddresses: (address: TUser['address']) => void;
+    addresses: IUser['address'];
+    setAddresses: (address: IUser['address']) => void;
   };
 }
 
@@ -117,7 +117,7 @@ function Shipping({
       </div>
       <div className={styles.addresses}>
         {addresses?.map(address => {
-          const addressId = address._id?.toString() as string;
+          const addressId = address._id;
           return (
             <div key={addressId} style={{ position: 'relative' }}>
               <div

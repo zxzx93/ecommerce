@@ -7,8 +7,8 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { CartItem } from '../../../interfaces/Cart.interface';
-import { NewProduct } from '../../../interfaces/Product.interface';
+import { CartItem } from '../../../interfaces/front/Cart.interface';
+import { NewProduct } from '../../../interfaces/front/Product.interface';
 import { RootState } from '../../../store';
 import { addToCart, updateCart } from '../../../store/cartSlice';
 import { numberWithCommas } from '../../../utils/formatting/numberFormat';

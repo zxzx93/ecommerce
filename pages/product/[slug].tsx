@@ -10,7 +10,7 @@ import Reviews from '../../components/productPage/reviews';
 import type {
   NewProduct,
   Product as IProduct,
-} from '../../interfaces/Product.interface';
+} from '../../interfaces/front/Product.interface';
 import Categories from '../../models/Categories';
 import Product from '../../models/Product';
 import SubCategories from '../../models/SubCategories';

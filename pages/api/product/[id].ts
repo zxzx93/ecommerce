@@ -3,8 +3,8 @@ import nc from 'next-connect';
 import {
   AddProductRequestData,
   AddProductResponseData,
-} from '../../../interfaces/Cart.interface';
-import { Color, Image } from '../../../interfaces/Product.interface';
+} from '../../../interfaces/back/Cart.interface';
+import { Color, Image } from '../../../interfaces/front/Product.interface';
 import Product from '../../../models/Product';
 import db from '../../../utils/helpers/db';
 

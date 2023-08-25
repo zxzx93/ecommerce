@@ -15,7 +15,11 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tosspayments/*": ["node_modules/@tosspayments/*"] // 해당 모듈의 경로를 설정
+    }
   },
   "include": [
     ".eslintrc.js",

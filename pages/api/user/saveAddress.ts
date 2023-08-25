@@ -1,7 +1,7 @@
 import { NextApiResponse } from 'next';
 import nc from 'next-connect';
 
-import { SaveAddressRequestData } from '../../../interfaces/User.interface';
+import { SaveAddressRequestData } from '../../../interfaces/back/User.interface';
 import auth from '../../../middleware/auth';
 import User from '../../../models/User';
 import db from '../../../utils/helpers/db';

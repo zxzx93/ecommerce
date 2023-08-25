@@ -1,8 +1,10 @@
-import mongoose, { InferSchemaType, Model, Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
+
+import { IProduct, IReview } from '../interfaces/back/Product.interface';
 
 const { ObjectId } = Schema.Types;
 
-const reviewSchema = new Schema({
+const reviewSchema = new Schema<IReview>({
   reviewBy: {
     type: ObjectId,
     ref: 'User',
@@ -31,7 +33,7 @@ const reviewSchema = new Schema({
   likes: [],
 });
 
-const productSchema = new Schema(
+const productSchema = new Schema<IProduct>(
   {
     reviews: [reviewSchema],
     name: {
@@ -97,9 +99,7 @@ const productSchema = new Schema(
   { timestamps: true }
 );
 
-type TProduct = InferSchemaType<typeof productSchema>;
-
-const Product: Model<TProduct> =
+const Product: Model<IProduct> =
   mongoose.models.Product || mongoose.model('Product', productSchema);
 
 export default Product;

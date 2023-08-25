@@ -1,7 +1,7 @@
 import { NextApiResponse } from 'next';
 import nc from 'next-connect';
 
-import { ApplyCouponRequestData } from '../../../interfaces/User.interface';
+import { ApplyCouponRequestData } from '../../../interfaces/back/User.interface';
 import auth from '../../../middleware/auth';
 import Cart from '../../../models/Cart';
 import Coupon from '../../../models/Coupon';
@@ -34,8 +34,6 @@ handler.post(async (req, res) => {
       discount: checkCoupon.discount, // 할인 %
       totalAfterDiscount, // 할인 가격
     });
-
-    // return res.json({ addresses: user.address });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

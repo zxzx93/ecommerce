@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { signIn, useSession } from 'next-auth/react';
 
-import { CartItem } from '../../../interfaces/Cart.interface';
+import { CartItem } from '../../../interfaces/front/Cart.interface';
 import { fetchSaveCart } from '../../../utils/fetchApi/fetchCart';
 import { numberWithCommas } from '../../../utils/formatting/numberFormat';
 import withRequestPrevention from '../../../utils/helpers/withRequestPrevention';
@@ -28,7 +28,7 @@ function Checkout({
 
   const saveCartToDBHandler = async () => {
     if (session) {
-      const res = fetchSaveCart(selectedItems);
+      const res = await fetchSaveCart(selectedItems);
       router.push('/checkout');
     } else {
       signIn();
@@ -58,7 +58,7 @@ function Checkout({
             cursor: `${itemsLength === 0 ? 'not-allowed' : ''}`,
           }}
           onClick={withRequestPrevention(saveCartToDBHandler, {
-            loadingDelay: 3000,
+            loadingDelay: 2000,
           })}
         >
           계속하기

@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import Router from 'next/router';
+import withRequestPrevention from 'utils/helpers/withRequestPrevention';
 import { InferType, object, string } from 'yup';
 
-import { TCart } from '../../../models/Cart';
-import { TUser } from '../../../models/User';
+import { ICart } from '../../../interfaces/back/Cart.interface';
+import { IUser } from '../../../interfaces/back/User.interface';
+import { Address } from '../../../interfaces/front/User.interface';
 import {
   fetchApplyCoupon,
   fetchPlaceOrder,
@@ -17,12 +18,12 @@ import ShippingInput from '../../inputs/shippingInput/ShippingInput';
 import styles from './styles.module.scss';
 
 interface SummaryProps {
-  user: TUser;
-  cart: TCart;
-  paymentMethod?: 'paypal' | 'credit_card';
+  user: IUser;
+  cart: ICart;
+  paymentMethod?: 'tosspay';
   selectedAddressProps: {
-    selectedAddress?: TUser['address'][number];
-    setSelectedAddress?: (address: TUser['address'][number]) => void;
+    selectedAddress?: Address;
+    setSelectedAddress?: (address: Address) => void;
   };
   totalAfterDiscountProps: {
     totalAfterDiscount: number;
@@ -40,28 +41,36 @@ function Summary({
   // user,
   cart,
   paymentMethod,
-  selectedAddressProps: { selectedAddress, setSelectedAddress },
+  selectedAddressProps: {
+    selectedAddress,
+    //  setSelectedAddress
+  },
   totalAfterDiscountProps: { totalAfterDiscount, setTotalAfterDiscount },
 }: SummaryProps) {
   const [coupon, setCoupon] = useState('');
   const [discount, setDiscount] = useState(0);
-  const [error, setError] = useState('');
   const [orderError, setOrderError] = useState('');
 
   const SummaryMethod = useForm<SummaryData>({
     resolver: yupResolver(SummarySchema),
   });
 
-  const { handleSubmit, reset, clearErrors } = SummaryMethod;
+  const {
+    handleSubmit,
+    getValues,
+    formState: { errors },
+    setError: setCoponFormError,
+  } = SummaryMethod;
+
+  const getCouponSubmitValue = getValues('coupon');
 
   const applyCouponHandler = async () => {
     const res = await fetchApplyCoupon(coupon);
     if (res.message) {
-      setError(res.message);
+      setCoponFormError('coupon', { message: res.message });
     } else {
       setTotalAfterDiscount(res.totalAfterDiscount);
       setDiscount(res.discount);
-      setError('');
     }
   };
 
@@ -70,27 +79,36 @@ function Summary({
       products: cart.products,
       shippingAddress: selectedAddress,
       paymentMethod,
-      total: totalAfterDiscount !== 0 ? totalAfterDiscount : cart.cartTotal,
-      // totalBeforeDiscount: cart.cartTotal,
-      // couponApplied: coupon,
+      total: totalAfterDiscount || cart.cartTotal,
+      totalBeforeDiscount: cart?.cartTotal,
+      couponApplied: coupon,
     });
     if (res.message) {
       setOrderError(res.message);
     } else {
       setOrderError('');
-      Router.push(`/order/${res.orderId}`);
+      if (res.orderId) {
+        Router.push(`/order/${res.orderId}`);
+      } else {
+        // Handle the case where orderId is undefined or an unexpected value.
+        // You may display an error message or implement an alternative flow.
+      }
     }
   };
 
   return (
     <div className={styles.summary}>
       <div className={styles.header}>
-        <h3>주문 요약</h3>
+        <h3>쿠폰</h3>
       </div>
 
       <div className={styles.coupon}>
         <FormProvider {...SummaryMethod}>
-          <form onSubmit={handleSubmit(applyCouponHandler)}>
+          <form
+            onSubmit={withRequestPrevention(handleSubmit(applyCouponHandler), {
+              loadingDelay: 2000,
+            })}
+          >
             <ShippingInput
               name='coupon'
               placeholder='*쿠폰'
@@ -100,19 +118,28 @@ function Summary({
 
             <div className={styles.infos}>
               <span>
-                전체 금액 : <b>{numberWithCommas(cart.cartTotal ?? 0)}</b>
+                결제할 금액 : <b>{numberWithCommas(cart.cartTotal ?? 0)}</b>
               </span>
-              {discount > 0 && (
+              {/* {!errors?.coupon && getCouponSubmitValue && discount > 0 && (
                 <span className={styles.coupon_span}>
                   쿠폰 적용 : <b>-{discount}%</b>
                 </span>
-              )}
-              {cart.cartTotal &&
+              )} */}
+              {!errors?.coupon &&
+                getCouponSubmitValue &&
+                discount > 0 &&
+                cart.cartTotal &&
                 totalAfterDiscount < cart.cartTotal &&
                 totalAfterDiscount !== 0 && (
-                  <span>
-                    새로운 가격 :<b>{numberWithCommas(totalAfterDiscount)}</b>
-                  </span>
+                  <>
+                    <span className={styles.coupon_span}>
+                      쿠폰 적용 : <b>-{discount}%</b>
+                    </span>
+                    <span>
+                      새로운 가격 :{' '}
+                      <b>{numberWithCommas(totalAfterDiscount)}</b>
+                    </span>
+                  </>
                 )}
             </div>
           </form>
@@ -122,7 +149,9 @@ function Summary({
       <button
         className={styles.submit_btn}
         type='submit'
-        onClick={() => placeOrderHandler()}
+        onClick={withRequestPrevention(placeOrderHandler, {
+          loadingDelay: 2000,
+        })}
       >
         주문/결제
       </button>

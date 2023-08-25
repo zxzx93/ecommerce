@@ -1,8 +1,10 @@
-import mongoose, { InferSchemaType, Model, Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
+
+import { ICart } from '../interfaces/back/Cart.interface';
 
 const { ObjectId } = Schema.Types;
 
-const cartSchema = new Schema(
+const cartSchema = new Schema<ICart>(
   {
     products: [
       {
@@ -50,9 +52,7 @@ const cartSchema = new Schema(
   { timestamps: true }
 );
 
-export type TCart = InferSchemaType<typeof cartSchema>;
-
-const Cart: Model<TCart> =
+const Cart: Model<ICart> =
   mongoose.models.Cart || mongoose.model('Cart', cartSchema);
 
 export default Cart;

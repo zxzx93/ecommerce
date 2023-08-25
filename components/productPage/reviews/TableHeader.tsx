@@ -1,7 +1,14 @@
 import { useState } from 'react';
 
-import { Color, Reviews, Size } from '../../../interfaces/Product.interface';
-import { OrderOptions, Rating } from '../../../interfaces/Review.interface';
+import {
+  Color,
+  Reviews,
+  Size,
+} from '../../../interfaces/front/Product.interface';
+import {
+  OrderOptions,
+  Rating,
+} from '../../../interfaces/front/Review.interface';
 
 import TableSelect from './TableSelect';
 

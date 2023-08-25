@@ -1,15 +1,11 @@
 import axios from 'axios';
 
-import { Address } from '../../interfaces/User.interface';
-import { TCart } from '../../models/Cart';
-import { TUser } from '../../models/User';
+import { CreateOrder } from '../../interfaces/front/Order.interface';
+import { Address } from '../../interfaces/front/User.interface';
 
 // 주소록 저장
 export const fetchSaveAddress = async (
-  address: Pick<
-    Address,
-    'name' | 'address1' | 'address2' | 'zipCode' | 'phoneNumber'
-  >
+  address: Omit<Address, '_id' | 'active'>
 ) => {
   try {
     const { data } = await axios.post('/api/user/saveAddress', {
@@ -48,22 +44,15 @@ export const fetchDeleteAddress = async (id: string) => {
 // 쿠폰 적용
 export const fetchApplyCoupon = async (coupon: string) => {
   try {
-    const { data } = await axios.post('/api/user/applyCoupon', coupon);
+    const { data } = await axios.post('/api/user/applyCoupon', { coupon });
     return data;
   } catch (error) {
     return error.response.data;
   }
 };
 
-interface Order {
-  products: TCart['products'];
-  shippingAddress?: TUser['address'][number];
-  paymentMethod?: string;
-  total?: number;
-}
-
 // 주문/결제
-export const fetchPlaceOrder = async (order: Order) => {
+export const fetchPlaceOrder = async (order: CreateOrder) => {
   try {
     const { data } = await axios.post('/api/order/create', order);
     return data;

@@ -5,9 +5,9 @@ function PaymentMethods() {
     <div className={`${styles.card} ${styles.cart__method}`}>
       <h2 className={styles.header}>결제</h2>
       <div className={styles.image}>
-        <img src='../../../images/payment/visa.webp' alt='' />
-        <img src='../../../images/payment/mastercard.webp' alt='' />
-        <img src='../../../images/payment/paypal.webp' alt='' />
+        <img src='../../../images/checkout/tosspay.png' alt='' />
+        {/* <img src='../../../images/payment/mastercard.webp' alt='' /> */}
+        {/* <img src='../../../images/payment/paypal.webp' alt='' /> */}
       </div>
       <h2 className={styles.header}>구매 보장</h2>
       <div className={styles.protection}>

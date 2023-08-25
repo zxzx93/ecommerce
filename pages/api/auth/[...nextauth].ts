@@ -4,13 +4,14 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 
-import User, { TUser } from '../../../models/User';
+import { IUser } from '../../../interfaces/back/User.interface';
+import User from '../../../models/User';
 import db from '../../../utils/helpers/db';
 
 import clientPromise from './lib/mongodb';
 
 interface SignInParams {
-  user: TUser;
+  user: IUser;
   password: string;
 }
 
@@ -61,19 +62,20 @@ export default NextAuth({
     strategy: 'jwt',
   },
   callbacks: {
-    async session({ session, token }) {
+    async session({ session, token }): Promise<any> {
       const user = await User.findById(token.sub);
-      const updatedSession = {
+      return {
         ...session,
         user: {
           ...session.user,
-          id: user?._id || token.sub?.toString(),
+          id: user?._id.toString() || token.sub?.toString(),
           role: user?.role || 'user',
+          tokenRole: user?.role || 'user',
         },
       };
-      return updatedSession;
     },
   },
+
   secret: process.env.JWT_SECRET,
   pages: {
     signIn: '/signin', // Displays signin buttons

@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { Rating } from '@mui/material';
 
-import { Color, NewProduct, Size } from '../../../interfaces/Product.interface';
-import { ImageFile } from '../../../interfaces/Review.interface';
+import {
+  Color,
+  NewProduct,
+  Size,
+} from '../../../interfaces/front/Product.interface';
+import { ImageFile } from '../../../interfaces/front/Review.interface';
 
 import Select from './Select';
 import UploadImage from './UploadImage';

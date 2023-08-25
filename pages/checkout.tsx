@@ -8,15 +8,18 @@ import Products from '../components/checkout/products';
 import Shipping from '../components/checkout/shipping';
 import Summary from '../components/checkout/summary';
 import paymentMethods from '../data/paymentMethods';
-import Cart, { TCart } from '../models/Cart';
-import User, { TUser } from '../models/User';
+import { ICart } from '../interfaces/back/Cart.interface';
+import { IUser } from '../interfaces/back/User.interface';
+import { Address } from '../interfaces/front/User.interface';
+import Cart from '../models/Cart';
+import User from '../models/User';
 import db from '../utils/helpers/db';
 
 import styles from '../styles/checkout.module.scss';
 
 interface CheckoutProps {
-  user: TUser;
-  cart: TCart;
+  user: IUser;
+  cart: ICart;
 }
 
 type PaymentMethod = (typeof paymentMethods)[number]['id'];
@@ -27,9 +30,7 @@ function Checkout({ user, cart }: CheckoutProps) {
     PaymentMethod | undefined
   >();
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
-  const [selectedAddress, setSelectedAddress] = useState<
-    TUser['address'][number] | undefined
-  >();
+  const [selectedAddress, setSelectedAddress] = useState<Address | undefined>();
 
   useEffect(() => {
     const check = addresses?.find(ad => ad.active === true);

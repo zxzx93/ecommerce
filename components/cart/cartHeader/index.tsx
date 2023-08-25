@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-import { CartItem } from '../../../interfaces/Cart.interface';
+import { CartItem } from '../../../interfaces/front/Cart.interface';
 import compareArrays from '../../../utils/helpers/compareArrays';
 import handleKeyDown from '../../../utils/helpers/keyboardHandlers';
 

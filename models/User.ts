@@ -1,8 +1,10 @@
-import mongoose, { InferSchemaType, Model, Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
+
+import { IUser } from '../interfaces/back/User.interface';
 
 const { ObjectId } = Schema.Types;
 
-const userSchema = new Schema(
+const userSchema = new Schema<IUser>(
   {
     _id: {
       type: ObjectId,
@@ -10,11 +12,11 @@ const userSchema = new Schema(
     },
     name: {
       type: String,
-      required: [true, '이름을 입력해주세요.'],
+      required: true,
     },
     email: {
       type: String,
-      required: [true, '이메일을 입력해주세요.'],
+      required: true,
       trim: true,
       unique: true,
     },
@@ -92,9 +94,7 @@ const userSchema = new Schema(
   }
 );
 
-export type TUser = InferSchemaType<typeof userSchema>;
-
-const User: Model<TUser> =
+const User: Model<IUser> =
   mongoose.models.User || mongoose.model('User', userSchema);
 
 export default User;

@@ -1,12 +1,14 @@
-import type { CountryProps } from '../../Interfaces/Country.interface';
-
 import Ad from './Ad';
 import Main from './Main';
 import Top from './Top';
 
 import styles from './styles.module.scss';
 
-function Header({ country }: CountryProps) {
+export interface HeaderProps {
+  country: { name: string; flag: string } | string;
+}
+
+function Header({ country }: HeaderProps) {
   return (
     <header className={styles.header}>
       <Ad />

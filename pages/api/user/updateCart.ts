@@ -1,7 +1,7 @@
 import { NextApiResponse } from 'next';
 import nc from 'next-connect';
 
-import { UpdateCartRequestData } from '../../../interfaces/Cart.interface';
+import { UpdateCartRequestData } from '../../../interfaces/back/Cart.interface';
 import Product from '../../../models/Product';
 import db from '../../../utils/helpers/db';
 

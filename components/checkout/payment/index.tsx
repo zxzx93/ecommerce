@@ -5,18 +5,17 @@ import styles from './styles.module.scss';
 
 interface PaymentProps {
   paymentProps: {
-    paymentMethod?: 'paypal' | 'credit_card';
-    setPaymentMethod: (id: 'paypal' | 'credit_card') => void;
+    paymentMethod?: 'tosspay';
+    setPaymentMethod: (id: 'tosspay') => void;
   };
 }
-
 function Payment({
   paymentProps: { paymentMethod, setPaymentMethod },
 }: PaymentProps) {
   return (
     <div className={styles.payment}>
       <div className={styles.header}>
-        <h3>주문/결제</h3>
+        <h3>결제</h3>
       </div>
       {paymentMethods.map(pm => (
         <div
@@ -35,7 +34,7 @@ function Payment({
             checked={paymentMethod === pm.id}
             onChange={() => setPaymentMethod(pm.id)}
           />
-          <img src={`../../../images/checkout/${pm.id}.webp`} alt={pm.name} />
+          <img src={`../../../images/checkout/${pm.id}.png`} alt={pm.name} />
 
           <div className={styles.payment__item_col}>
             <span>{pm.name}로 결제하기</span>

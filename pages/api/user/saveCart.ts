@@ -1,10 +1,8 @@
 import { NextApiResponse } from 'next';
 import nc from 'next-connect';
 
-import {
-  SaveCartRequestData,
-  TempProduct,
-} from '../../../interfaces/Cart.interface';
+import { SaveCartRequestData } from '../../../interfaces/back/Cart.interface';
+import { TempProduct } from '../../../interfaces/front/Cart.interface';
 import auth from '../../../middleware/auth';
 import Cart from '../../../models/Cart';
 import Product from '../../../models/Product';

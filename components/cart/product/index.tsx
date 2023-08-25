@@ -5,7 +5,7 @@ import { MdOutlineKeyboardArrowRight, MdStorefront } from 'react-icons/md';
 import { TbMinus, TbPlus } from 'react-icons/tb';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CartItem } from '../../../interfaces/Cart.interface';
+import { CartItem } from '../../../interfaces/front/Cart.interface';
 import { RootState } from '../../../store';
 import { updateCart } from '../../../store/cartSlice';
 import { numberWithCommas } from '../../../utils/formatting/numberFormat';

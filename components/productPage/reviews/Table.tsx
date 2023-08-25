@@ -2,7 +2,11 @@ import { ChangeEvent, useState } from 'react';
 import { Pagination } from '@mui/material';
 
 import usePagination from '../../../hooks/Pagination';
-import { Color, Reviews, Size } from '../../../interfaces/Product.interface';
+import {
+  Color,
+  Reviews,
+  Size,
+} from '../../../interfaces/front/Product.interface';
 
 import Review from './Review';
 import TableHeader from './TableHeader';

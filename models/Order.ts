@@ -1,8 +1,10 @@
-import mongoose, { InferSchemaType, Model, Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
+
+import { IOrder } from '../interfaces/back/Order.interface';
 
 const { ObjectId } = Schema.Types;
 
-const orderSchema = new mongoose.Schema(
+const orderSchema = new Schema<IOrder>(
   {
     user: {
       type: ObjectId,
@@ -86,9 +88,9 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: 'Not Processed',
+      default: 'NotProcessed',
       enum: [
-        'Not Processed',
+        'NotProcessed',
         'Processing',
         'Dispatched',
         'Cancelled',
@@ -101,15 +103,22 @@ const orderSchema = new mongoose.Schema(
     deliveredAt: {
       type: Date,
     },
+    couponApplied: {
+      type: String,
+    },
+    totalBeforeDiscount: {
+      type: Number,
+    },
+    paymentMethod: {
+      type: String,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-type TOrder = InferSchemaType<typeof orderSchema>;
-
-const Order: Model<TOrder> =
+const Order: Model<IOrder> =
   mongoose.models.Order || mongoose.model('Order', orderSchema);
 
 export default Order;

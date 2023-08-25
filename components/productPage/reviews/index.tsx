@@ -1,7 +1,7 @@
 import { Rating } from '@mui/material';
 import { signIn, useSession } from 'next-auth/react';
 
-import { NewProduct } from '../../../interfaces/Product.interface';
+import { NewProduct } from '../../../interfaces/front/Product.interface';
 
 import AddReview from './AddReview';
 import Table from './Table';

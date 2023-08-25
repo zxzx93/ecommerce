@@ -76,14 +76,14 @@ export default function Links() {
   return (
     <div className={styles.footer__links}>
       {links.map((link, i) => (
-        <ul>
+        <ul key={link.heading}>
           {i === 0 ? (
             <img src='../../../logo.png' alt='' />
           ) : (
             <b>{link.heading}</b>
           )}
           {link.links.map(l => (
-            <li>
+            <li key={l.name}>
               <Link href={l.link}>{l.name}</Link>
             </li>
           ))}

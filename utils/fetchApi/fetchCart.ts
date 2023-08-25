@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { CartItem } from '../../interfaces/Cart.interface';
+import { CartItem } from '../../interfaces/front/Cart.interface';
 
 // checkout 결제 버튼 클릭시 카트에 저장
 export const fetchSaveCart = async (selectedItems: CartItem[]) => {

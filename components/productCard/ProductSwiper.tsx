@@ -5,13 +5,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-import { ProductImage } from '../../interfaces/Product.interface';
+import { Image } from '../../interfaces/front/Product.interface';
 
 import 'swiper/css';
 import styles from './styles.module.scss';
 
 interface ProductSwiperProps {
-  images: ProductImage[];
+  images: Image[];
 }
 
 function ProductSwiper({ images }: ProductSwiperProps) {

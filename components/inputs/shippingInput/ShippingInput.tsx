@@ -1,8 +1,9 @@
-import { ChangeEvent, FocusEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, MouseEvent, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 
 import styles from './styles.module.scss';
+import handleKeyDown from 'utils/helpers/keyboardHandlers';
 
 interface InputProps {
   name:
@@ -34,6 +35,10 @@ function ShippingInput({ name, placeholder, ...props }: InputProps) {
     }
   };
 
+  const handleClick = (e: MouseEvent<HTMLSpanElement>) => {
+    e.currentTarget.parentElement?.querySelector('input')?.focus();
+  };
+
   return (
     <div
       className={`${styles.input} ${errors[name] && styles.error__shipping}`}
@@ -44,7 +49,14 @@ function ShippingInput({ name, placeholder, ...props }: InputProps) {
         onBlur={handleBlur}
       >
         <input {...register(name)} name={name} autoComplete='off' {...props} />
-        <span className={move ? styles.move : ''}>{placeholder}</span>
+        <span
+          className={move ? styles.move : ''}
+          onClick={handleClick}
+          onKeyDown={e => handleKeyDown(e, () => handleClick)}
+          role='none'
+        >
+          {placeholder}
+        </span>
       </div>
 
       {errors[name] && (

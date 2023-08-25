@@ -16,12 +16,16 @@ import {
   womenShoes,
   womenSwiper,
 } from '../data/offers';
-import type { Country } from '../interfaces/Country.interface';
-import type { Product } from '../interfaces/Product.interface';
+import type { Product } from '../interfaces/front/Product.interface';
 import fetchCountry from '../utils/fetchApi/fetchCountry';
 import { fetchProducts } from '../utils/fetchApi/fetchProducts';
 
 import styles from '../styles/home.module.scss';
+
+interface Country {
+  name: string;
+  flag: string;
+}
 
 interface HomeProps {
   country: Country;

@@ -1,14 +1,16 @@
-import mongoose, { InferSchemaType, Model, Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
+
+import { ISubCategories } from '../interfaces/back/SubCategories.interface';
 
 const { ObjectId } = Schema.Types;
 
-const subCategoriesSchema = new Schema(
+export const subCategoriesSchema = new Schema<ISubCategories>(
   {
     name: {
       type: String,
       required: true,
-      minlength: [2, '2글자 이상 입력해주세요.'],
-      maxlength: [32, '32글자 이하로 입력해주세요.'],
+      minlength: 2,
+      maxlength: 32,
     },
     slug: {
       type: String,
@@ -25,9 +27,7 @@ const subCategoriesSchema = new Schema(
   { timestamps: true }
 );
 
-type TSubCategories = InferSchemaType<typeof subCategoriesSchema>;
-
-const SubCategories: Model<TSubCategories> =
+const SubCategories: Model<ISubCategories> =
   mongoose.models.SubCategories ||
   mongoose.model('SubCategories', subCategoriesSchema);
 

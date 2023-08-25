@@ -1,10 +1,11 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { CouponRequestData } from 'interfaces/back/Coupon.interface';
+import { NextApiResponse } from 'next';
 import nc from 'next-connect';
 
 import Coupon from '../../../models/Coupon';
 import db from '../../../utils/helpers/db';
 
-const handler = nc<NextApiRequest, NextApiResponse>();
+const handler = nc<CouponRequestData, NextApiResponse>();
 
 handler.post(async (req, res) => {
   try {

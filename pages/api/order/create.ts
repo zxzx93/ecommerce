@@ -1,7 +1,7 @@
 import { NextApiResponse } from 'next';
 import nc from 'next-connect';
 
-import { CreateOrderRequestData } from '../../../interfaces/User.interface';
+import { CreateOrderRequestData } from '../../../interfaces/back/Order.interface';
 import auth from '../../../middleware/auth';
 import Order from '../../../models/Order';
 import User from '../../../models/User';
@@ -17,8 +17,8 @@ handler.post(async (req, res) => {
       shippingAddress,
       paymentMethod,
       total,
-      // totalBeforeDiscount,
-      // couponApplied,
+      totalBeforeDiscount,
+      couponApplied,
     } = req.body;
     const userId = req.user;
 
@@ -37,6 +37,8 @@ handler.post(async (req, res) => {
       shippingAddress,
       paymentMethod,
       total,
+      totalBeforeDiscount,
+      couponApplied,
     }).save();
 
     return res.json({ orderId: newOrder._id });

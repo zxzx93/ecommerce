@@ -5,9 +5,9 @@ import CartHeader from '../components/cart/cartHeader';
 import Checkout from '../components/cart/checkout';
 import Empty from '../components/cart/empty';
 import Header from '../components/cart/header';
-import PaymentMethods from '../components/cart/paymentMethods';
+// import PaymentMethods from '../components/cart/paymentMethods';
 import Product from '../components/cart/product';
-import { CartItem } from '../interfaces/Cart.interface';
+import { CartItem } from '../interfaces/front/Cart.interface';
 import { RootState } from '../store';
 import { updateCart } from '../store/cartSlice';
 import { fetchUpdateCart } from '../utils/fetchApi/fetchCart';
@@ -68,7 +68,7 @@ const cart = () => {
               subTotal={subTotal}
               total={total}
             />
-            <PaymentMethods />
+            {/* <PaymentMethods /> */}
           </div>
         ) : (
           <Empty />

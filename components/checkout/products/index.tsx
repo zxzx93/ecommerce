@@ -1,10 +1,10 @@
-import { TCart } from '../../../models/Cart';
+import { ICart } from '../../../interfaces/back/Cart.interface';
 import { numberWithCommas } from '../../../utils/formatting/numberFormat';
 
 import styles from './styles.module.scss';
 
 interface ProductsProps {
-  cart: TCart;
+  cart: ICart;
 }
 
 function products({ cart }: ProductsProps) {

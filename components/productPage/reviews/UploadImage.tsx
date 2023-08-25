@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { MdOutlineRemoveCircle } from 'react-icons/md';
 
-import { ImageFile } from '../../../interfaces/Review.interface';
+import { ImageFile } from '../../../interfaces/front/Review.interface';
 
 import styles from './styles.module.scss';
 

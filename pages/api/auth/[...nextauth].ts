@@ -62,6 +62,16 @@ export default NextAuth({
     strategy: 'jwt',
   },
   callbacks: {
+    async jwt({ token, user }) {
+      // 새로운 토큰 객체 생성
+      const newToken = { ...token };
+      // 로그인 시 user 객체가 전달되므로, 이 경우 newToken에 role 값을 추가합니다.
+      if (user) {
+        newToken.role = (user as IUser).role || 'user';
+      }
+      return newToken;
+    },
+
     async session({ session, token }): Promise<any> {
       const user = await User.findById(token.sub);
       return {
@@ -69,8 +79,7 @@ export default NextAuth({
         user: {
           ...session.user,
           id: user?._id.toString() || token.sub?.toString(),
-          role: user?.role || 'user',
-          tokenRole: user?.role || 'user',
+          role: token.role || 'user',
         },
       };
     },

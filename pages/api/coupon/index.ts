@@ -1,13 +1,13 @@
-import { CouponRequestData } from 'interfaces/back/Coupon.interface';
+import { CreateCouponRequestData } from 'interfaces/back/Coupon.interface';
 import { NextApiResponse } from 'next';
 import nc from 'next-connect';
 
 import Coupon from '../../../models/Coupon';
 import db from '../../../utils/helpers/db';
 
-const handler = nc<CouponRequestData, NextApiResponse>();
+const handler = nc();
 
-handler.post(async (req, res) => {
+handler.post<CreateCouponRequestData, NextApiResponse>(async (req, res) => {
   try {
     db.connectDb();
     const { coupon, startDate, endDate, discount } = req.body;

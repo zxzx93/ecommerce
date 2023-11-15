@@ -1,0 +1,54 @@
+@import '../base';
+
+.list {
+  margin-top: 3rem;
+  font-size: 14px;
+
+  &__item {
+    height: 60px;
+    padding: 1rem;
+    background: $gradient-color;
+    margin-top: 10px;
+    color: #fff;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    // @media (max-width: 800px) {
+    //   flex-direction: column;
+    //   gap: 10px;
+    // }
+    svg {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+    input {
+      padding: 10px;
+      border: none;
+      outline: none;
+      color: #fff;
+      background: transparent;
+    }
+
+    &_expand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+}
+
+.open {
+  background: #fff !important;
+  color: #111 !important;
+}
+
+.date_picker {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}

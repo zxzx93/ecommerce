@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
-// 각각의 사이트 페이지 접근 조건에 따라 해당 페이지로의 접근을 허용하거나 로그인 페이지로 리다이렉션하여 사용자 인증을 요구
+// 각각의 사이트 페이지 접근 조건에 따라 해당 페이지로의 접근을 허용
 const authMiddleware = async (req: NextRequest) => {
   const { pathname, origin } = req.nextUrl;
 

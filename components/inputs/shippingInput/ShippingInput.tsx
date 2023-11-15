@@ -1,9 +1,9 @@
 import { ChangeEvent, FocusEvent, MouseEvent, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import handleKeyDown from 'utils/helpers/keyboardHandlers';
 
 import styles from './styles.module.scss';
-import handleKeyDown from 'utils/helpers/keyboardHandlers';
 
 interface InputProps {
   name:

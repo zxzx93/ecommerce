@@ -1,20 +1,45 @@
-import { Document } from 'mongoose';
+import { Document, Schema, Types } from 'mongoose';
 
 import { ICategories } from './Categories.interface';
 import { ISubCategories } from './SubCategories.interface';
 import { IUser } from './User.interface';
 
-// const { ObjectId } = Schema.Types;
+interface IStyle {
+  color?: string;
+  image?: string;
+}
+
+interface ISize {
+  size: string;
+  qty: number;
+  price: number;
+}
+
+interface ISubProduct {
+  sku?: string;
+  images: string[];
+  description_images: string[];
+  color: IStyle;
+  sizes: ISize[];
+  discount: number;
+}
+
+interface IDetails {
+  name: string;
+  value: string;
+}
+
+interface IQuestion {
+  question: string;
+  answer: string;
+}
 
 export interface IReview {
   reviewBy: IUser;
   rating: number;
   review: string;
   size?: string;
-  style: {
-    color?: string;
-    image?: string;
-  };
+  style: IStyle;
   fit?: string;
   images: any[];
   likes: any[];
@@ -28,25 +53,11 @@ export interface IProduct extends Document {
   slug: string;
   categories: ICategories;
   subCategories: ISubCategories[];
-  details: { name: string; value: string }[];
-  questions: { question: string; answer: string }[];
+  details: IDetails[];
+  questions: IQuestion[];
   refundpolicy?: string;
   rating: number;
   numReviews: number;
   shipping: number;
-  subProducts: {
-    sku?: string;
-    images: string[];
-    description_images: string[];
-    color: {
-      color?: string;
-      image?: string;
-    };
-    sizes: {
-      size: string;
-      qty: number;
-      price: number;
-    }[];
-    discount: number;
-  }[];
+  subProducts: ISubProduct[];
 }

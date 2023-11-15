@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
 
 import cartSlice from './cartSlice';
+import expandSlice from './expandSlice';
 
 const persistConfig = {
   key: 'root',
@@ -16,6 +17,7 @@ const persistConfig = {
 
 const reducer = combineReducers({
   cart: cartSlice,
+  expand: expandSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

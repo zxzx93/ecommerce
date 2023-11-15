@@ -1,6 +1,5 @@
+import { ICoupon } from 'interfaces/back/Coupon.interface';
 import mongoose, { Model, Schema } from 'mongoose';
-
-import { ICoupon } from '../interfaces/back/coupon.interface';
 
 const couponSchema = new Schema<ICoupon>(
   {

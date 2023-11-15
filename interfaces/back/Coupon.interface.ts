@@ -1,7 +1,8 @@
 import { Document } from 'mongoose';
-import { NextApiRequest } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export interface ICoupon extends Document {
+  _id: string;
   coupon: string;
   startDate: string;
   endDate: string;
@@ -10,4 +11,16 @@ export interface ICoupon extends Document {
 
 export interface CouponRequestData extends NextApiRequest {
   body: ICoupon;
+}
+
+// export interface CreateCouponRequestData extends NextApiRequest {
+//   body: ICoupon;
+// }
+// export interface UpdateCouponRequestData extends NextApiRequest {
+//   body: ICoupon;
+// }
+
+export interface CouponResponseData extends NextApiResponse {
+  coupons: ICoupon[];
+  message: string;
 }
